@@ -1,0 +1,415 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Katalog CreateOn Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,400..600&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+<style>
+/* Layout: a product shelf. Covers sit in a browsable shelf at the top; below,
+   each product is a spread: cover on the left, copy on the right, like the
+   brand's own product cards. */
+:root {
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --ink: #17153F;
+  --text: #2B2A36;
+  --muted: #6B6875;
+  --line: #E4E1D8;
+  --navy: #1B1866;
+  --orange: #D65F35;
+  --chip: #F1EDE4;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121124; --surface: #1B1A31; --ink: #F1EFF8; --text: #DAD8E4; --muted: #A09DB0;
+    --line: #2E2C47; --navy: #A9A6FF; --orange: #F08458; --chip: #24223D; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121124; --surface: #1B1A31; --ink: #F1EFF8; --text: #DAD8E4; --muted: #A09DB0;
+  --line: #2E2C47; --navy: #A9A6FF; --orange: #F08458; --chip: #24223D; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--body); font-size: 16px; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+/* Header */
+header.top { padding-block: 28px 8px; display: grid; justify-items: center; gap: 4px; text-align: center; }
+.logo { width: min(520px, 100%); border-radius: 10px; display: block; }
+.intro { max-width: 60ch; margin: 18px auto 0; color: var(--muted); font-size: 17px; }
+
+/* Shelf */
+.shelf-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 40px 0 14px; display: flex; justify-content: space-between; gap: 12px; }
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } }
+.shelf a { display: grid; gap: 6px; text-decoration: none; }
+.shelf img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: var(--surface); border-radius: 8px; border: 1px solid var(--line); transition: transform .2s ease, border-color .2s ease; }
+.shelf a:hover img { transform: translateY(-3px); border-color: var(--orange); }
+.shelf span { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .shelf img { transition: none; } .shelf a:hover img { transform: none; } }
+
+/* Product spreads */
+.product { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; padding-block: 64px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
+.product:first-of-type { margin-top: 56px; }
+@media (max-width: 760px) { .product { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 48px; } }
+.cover { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); display: grid; gap: 14px; }
+@media (max-width: 760px) { .cover { position: static; max-width: 360px; } }
+.cover img { width: 100%; border-radius: 12px; background: #fff; display: block; }
+.avail { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--orange); }
+.avail b { font-style: normal; font-weight: 600; color: var(--navy); }
+
+.copy { min-width: 0; display: grid; gap: 16px; align-content: start; }
+.copy h2 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.1; color: var(--ink); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.copy .lead { font-weight: 600; color: var(--ink); font-size: 18px; margin: 0; }
+.copy p { margin: 0; max-width: 64ch; }
+.copy h3 { font-family: var(--display); font-weight: 600; font-size: 21px; color: var(--navy); margin: 12px 0 0; text-wrap: balance; }
+.copy ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 64ch; }
+.copy li { position: relative; padding-left: 22px; }
+.copy li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+.copy li b { color: var(--ink); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { background: var(--chip); color: var(--ink); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+.badge { justify-self: start; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+
+footer { text-align: center; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 32px; }
+footer em { font-family: var(--display); font-size: 20px; color: var(--navy); display: block; margin-bottom: 6px; }
+footer em span { color: var(--orange); }
+.top-link { display: inline-block; margin-top: 14px; color: var(--orange); }
+</style>
+
+<div class="wrap">
+  <header class="top" id="top">
+    <img class="logo" src="logo.png" alt="CreateOn Studio – Mniej wymyślania. Więcej tworzenia.">
+    <p class="intro">Gotowe szablony, bazy pomysłów i przewodniki dla twórców, marek osobistych i małych firm. Wybierz produkt, aby zobaczyć, co zawiera.</p>
+  </header>
+
+  <div class="shelf-label"><span>Wszystkie produkty</span><span>14</span></div>
+  <ol class="shelf">
+    <li><a href="#mockupy"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów Mockup</span></a></li>
+    <li><a href="#hooki"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ hooków</span></a></li>
+    <li><a href="#naklejki"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ naklejek</span></a></li>
+    <li><a href="#identyfikacja"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>Brand board</span></a></li>
+    <li><a href="#cta"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 CTA</span></a></li>
+    <li><a href="#macierzynstwo"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>1500+ rolek o macierzyństwie</span></a></li>
+    <li><a href="#wellness"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek wellness</span></a></li>
+    <li><a href="#pomysly"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt</span></a></li>
+    <li><a href="#prompty"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów</span></a></li>
+    <li><a href="#planer"><img src="c/planer.jpg" alt="" loading="lazy"><span>Content planer</span></a></li>
+    <li><a href="#newslettery"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 newsletterów</span></a></li>
+    <li><a href="#shortcody"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>350 shortcodów</span></a></li>
+    <li><a href="#rolki-claude"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><span>Reelsy w Claude</span></a></li>
+    <li><a href="#manychat"><img src="c/manychat.jpg" alt="" loading="lazy"><span>30 automatyzacji ManyChat</span></a></li>
+  </ol>
+
+  <!-- 1 -->
+  <article class="product" id="mockupy">
+    <div class="cover"><img src="c/mockupy.jpg" alt="Okładka: 1000 szablonów mockupów"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>1000 szablonów Mockup do promocji i sprzedaży produktów</h2>
+      <p class="lead">Gotowe rozwiązanie, które pozwala szybko przygotować profesjonalne oferty i zacząć sprzedawać bez żmudnego projektowania każdego elementu od zera.</p>
+      <p>Otrzymujesz ponad 1000 estetycznych, profesjonalnych makiet, które możesz łatwo edytować w Canvie i dopasować do charakteru swoich produktów oraz marki. Zamiast zaczynać od pustego projektu, wybierasz gotowy szablon, dodajesz swoje treści i grafiki, i Twoja oferta jest gotowa do publikacji.</p>
+      <h3>Co otrzymujesz?</h3>
+      <ul>
+        <li>Ponad 1000 makiet ofert w różnych rozmiarach i formatach</li>
+        <li>Ponad 100 makiet ofert wideo do dynamicznych prezentacji produktów</li>
+        <li>Ponad 300 makiet planerów i zaproszeń</li>
+        <li>Ponad 20 szablonów scen sprzedaży produktów</li>
+        <li>50 makiet banerów sklepowych</li>
+        <li>70 stron z podziękowaniami i szablonami instrukcji do pobrania</li>
+      </ul>
+      <p>Każdy materiał możesz edytować w Canvie, również w bezpłatnej wersji. Dopasuj kolory, czcionki i elementy do stylu swojej marki i stwórz projekty po swojemu.</p>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="product" id="hooki">
+    <div class="cover"><img src="c/hooki.jpg" alt="Okładka: 450+ najlepszych hooków na Instagram i TikTok" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>450+ najlepszych hooków na Instagram i TikTok</h2>
+      <p class="lead">Masz tylko 3 sekundy, aby zatrzymać uwagę odbiorcy.</p>
+      <p>Ta zoptymalizowana baza ponad 450 przetestowanych zdań otwierających i hooków daje Ci natychmiastową przewagę na Instagramie i TikToku.</p>
+      <h3>Co znajdziesz w środku?</h3>
+      <ul>
+        <li><b>Ponad 450 zoptymalizowanych hooków tekstowych</b> podzielonych na czytelne kategorie, m.in. budowanie ciekawości, obalanie mitów, kontrowersje, porady i storytelling, aby uzyskać najwyższą konwersję i zaangażowanie.</li>
+      </ul>
+      <h3>Dlaczego ten pakiet to Twój nowy game-changer?</h3>
+      <ul>
+        <li><b>Przyciągasz uwagę w pierwsze 3 sekundy:</b> skuteczne zdania otwierające, które błyskawicznie przerywają przewijanie (scroll-stopper).</li>
+        <li><b>Maksymalizujesz czas oglądania:</b> hooki skonstruowane tak, aby budować ciekawość i skłaniać do obejrzenia rolki do końca i przeczytania opisu.</li>
+        <li><b>Zero paraliżu decyzyjnego:</b> otwierasz bazę, wybierasz pasujący hook, nakładasz swój estetyczny B-roll i publikujesz w 2 minuty.</li>
+      </ul>
+      <h3>Dla kogo jest ta baza?</h3>
+      <p>Dla wszystkich twórców cyfrowych, marek osobistych, sprzedawców własnych produktów i ekspertów, którzy chcą budować zasięgi i sprzedawać w social mediach bez stresu, bez konieczności nagrywania siebie i bez straty czasu.</p>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="product" id="naklejki">
+    <div class="cover"><img src="c/naklejki.jpg" alt="Okładka: 500+ estetycznych naklejek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>500+ estetycznych naklejek karuzelowych</h2>
+      <p class="lead">Sezonowe i estetyczne naklejki na relacje i karuzele.</p>
+      <p>Zestaw ponad 500 estetycznych naklejek graficznych to niezbędne narzędzie dla każdego influencera, twórcy i marki osobistej, której zależy na spójnym i przyciągającym wzrok wyglądzie profilu.</p>
+      <p>Koniec z szukaniem pojedynczych elementów w wyszukiwarkach. Teraz masz całą cyfrową bibliotekę gotowych detali pod ręką, w jednym miejscu.</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="product" id="identyfikacja">
+    <div class="cover"><img src="c/identyfikacja.jpg" alt="Okładka: Brand board szablony" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>40 szablonów identyfikacji wizualnej marki w Canva</h2>
+      <p class="lead">Zadbaj o profesjonalny i spójny wizerunek swojej marki dzięki kolekcji edytowalnych szablonów.</p>
+      <p>To praktyczne narzędzie dla właścicieli małych firm, twórców internetowych, projektantów, trenerów oraz osób sprzedających produkty cyfrowe.</p>
+      <h3>Co zawiera pakiet?</h3>
+      <ul>
+        <li>40 edytowalnych szablonów</li>
+        <li>Miejsce na logo, kolory marki i wybrane czcionki</li>
+        <li>Pełną możliwość personalizacji w Canvie</li>
+        <li>Natychmiastowy dostęp do plików cyfrowych</li>
+      </ul>
+      <p>Te szablony pomogą Ci uporządkować najważniejsze elementy identyfikacji wizualnej i stworzyć spójny wygląd marki, zarówno w materiałach biznesowych, jak i w mediach społecznościowych.</p>
+      <h3>Edytuj w Canvie</h3>
+      <p>Dopasuj każdy szablon do swojej marki. Z łatwością zmienisz:</p>
+      <div class="tags"><span>zdjęcia</span><span>kolory</span><span>czcionki</span><span>teksty</span><span>tła</span><span>elementy układu</span></div>
+      <p>Nie potrzebujesz żadnych zaawansowanych umiejętności graficznych. Wystarczy bezpłatne konto w Canvie.</p>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="product" id="cta">
+    <div class="cover"><img src="c/cta.jpg" alt="Okładka: 101 wezwań do działania" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>101 wezwań do działania (CTA), które pomogą Ci sprzedawać</h2>
+      <p class="lead">Wybierasz, kopiujesz i wklejasz do swojej treści.</p>
+      <p>Zestaw 101 gotowych wezwań do działania w formie webbooka pomoże Ci tworzyć treści, które nie tylko przyciągają uwagę, ale przede wszystkim skłaniają odbiorców do wykonania konkretnego kroku.</p>
+      <ul>
+        <li><b>Zwiększaj konwersje.</b> Jasne i konkretne CTA mówią odbiorcom dokładnie, co mają zrobić: kliknąć, kupić, zapisać się, pobrać materiał czy skontaktować się z Tobą. Im prostszy komunikat, tym łatwiej podjąć decyzję.</li>
+        <li><b>Kieruj ruch tam, gdzie go potrzebujesz.</b> Wykorzystuj CTA, aby przekierowywać odbiorców na swoją stronę internetową, sklep, blog, konkretną ofertę czy stronę produktu.</li>
+        <li><b>Zwiększaj sprzedaż.</b> Skuteczne CTA zachęcają odbiorców do zakupu, zapisania się na listę mailingową, skorzystania z oferty lub wykonania kolejnego kroku na ścieżce zakupowej.</li>
+        <li><b>Buduj relacje z odbiorcami.</b> CTA to nie tylko sprzedaż. Możesz wykorzystać je do zachęcania do zadawania pytań, komentowania, dzielenia się opinią, obserwowania profilu czy kontaktu z Tobą.</li>
+        <li><b>Ułatwiaj podejmowanie decyzji.</b> Zbyt wiele możliwości może paraliżować klienta. Dobre CTA wskazuje konkretny następny krok, zmniejsza chaos i ułatwia przejście od zainteresowania do działania.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="product" id="macierzynstwo">
+    <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 1500+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>1500+ rolek o macierzyństwie</h2>
+      <p class="lead">Twórz atrakcyjne rolki o macierzyństwie bez konieczności projektowania każdego filmu od podstaw.</p>
+      <p>Dzięki gotowym szablonom szybko przygotujesz treści do mediów społecznościowych, podzielisz się doświadczeniami związanymi z rodzicielstwem, pokażesz codzienne życie rodzinne lub wypromujesz swoją markę. To praktyczne rozwiązanie dla zapracowanych mam, przedsiębiorców i influencerów, którzy chcą regularnie publikować estetyczne, dopracowane materiały.</p>
+      <h3>Co otrzymujesz?</h3>
+      <ul>
+        <li>Ponad 90 filmów o macierzyństwie z gotowymi hookami, które możesz edytować w Canvie</li>
+        <li>Ponad 800 szablonów filmów o mamach i macierzyństwie, gotowych do dostosowania i pobrania</li>
+        <li>Ponad 300 filmów poświęconych tematyce ciąży</li>
+        <li>Ponad 200 filmów dotyczących dzieci i niemowląt</li>
+      </ul>
+      <h3>Dlaczego warto?</h3>
+      <ul>
+        <li><b>Oszczędność czasu:</b> korzystaj z gotowych układów i sprawniej przygotowuj materiały do publikacji.</li>
+        <li><b>Większe zaangażowanie:</b> przyciągaj uwagę odbiorców dzięki estetycznym filmom i pomysłom na angażujące początki nagrań.</li>
+        <li><b>Wszechstronne zastosowanie:</b> twórz treści o macierzyństwie, ciąży, dzieciach i codziennym życiu rodzinnym, a także materiały wspierające promocję własnej marki.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="product" id="wellness">
+    <div class="cover"><img src="c/wellness.jpg" alt="Okładka: 850+ gotowych rolek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>850+ gotowych rolek: zdrowy styl życia, afirmacje i równowaga</h2>
+      <p class="lead">Afirmacje, spokojne kadry, uważność i codzienne dbanie o siebie.</p>
+      <p>Ten zestaw łączy ponad 850 materiałów, które możesz wykorzystać w komunikacji swojej marki wellness. Znajdziesz tu zarówno krótkie, bezosobowe rolki, jak i filmy o zdrowiu oraz gotowe projekty na Instagram. Dzięki temu łatwiej dopasujesz publikacje do tematyki swojego profilu i osób, do których chcesz dotrzeć.</p>
+      <h3>Zawartość zestawu</h3>
+      <ul>
+        <li>150 bezosobowych rolek o duchowości z gotowymi napisami</li>
+        <li>250 bezosobowych rolek na Instagram o duchowości i holistycznym stylu życia</li>
+        <li>200 filmów o zdrowiu z gotowymi napisami</li>
+        <li>Ponad 100 szablonów filmów z afirmacjami i ćwiczeniami uważności</li>
+        <li>50 szablonów rolek na Instagram</li>
+        <li>50 szablonów relacji na Instagram</li>
+        <li>50 szablonów filmów na Instagram o tematyce wellness</li>
+      </ul>
+      <h3>Dopasuj materiały do swojego stylu</h3>
+      <p>Niezależnie od tego, czy prowadzisz profil poświęcony duchowości, pracujesz jako instruktor uważności, czy tworzysz treści o holistycznym podejściu do życia, możesz wykorzystać gotowe projekty na własny sposób. Wszystkie szablony są edytowalne w Canvie, także w bezpłatnej wersji. Wystarczy zmienić kolory, czcionki i elementy graficzne, aby dopasować je do swojej identyfikacji wizualnej.</p>
+      <p>Zamiast za każdym razem szukać pomysłów na nowe publikacje, masz pod ręką różnorodne materiały, po które możesz sięgnąć, gdy planujesz kolejne treści.</p>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="product" id="pomysly">
+    <div class="cover"><img src="c/pomysly.jpg" alt="Okładka: 500 pomysłów na produkt cyfrowy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>Pomysły na produkty cyfrowe i treści sprzedażowe</h2>
+      <p class="lead">Masz pomysł na rozwój swojego profilu, ale brakuje Ci konkretnego planu?</p>
+      <p>Ten zestaw pomoże Ci uporządkować działania na Instagramie i znaleźć inspiracje do stworzenia własnych produktów cyfrowych. W środku czeka praktyczny poradnik o relacjach (Stories), który pokazuje, jak planować publikacje, przyciągać uwagę odbiorców, wykorzystywać CTA, budować spójny branding i prezentować swoją ofertę. Do tego otrzymujesz ponad 500 pomysłów na produkty cyfrowe, które możesz opracować i wprowadzić do sprzedaży.</p>
+      <h3>Od czego zacząć?</h3>
+      <ul>
+        <li><b>Lepsze Stories:</b> poznaj strategie tworzenia angażujących relacji i wykorzystuj je do komunikacji z odbiorcami.</li>
+        <li><b>Skuteczniejsza prezentacja oferty:</b> dowiedz się, jak łączyć treści, branding i wezwania do działania.</li>
+        <li><b>Pomysł na własny produkt:</b> przejrzyj ponad 500 inspiracji.</li>
+      </ul>
+      <h3>Jakie tematy obejmuje baza pomysłów?</h3>
+      <p>Od zdrowia i rozwoju osobistego po biznes i technologię:</p>
+      <div class="tags"><span>Fitness i zdrowie</span><span>Finanse osobiste</span><span>Marketing cyfrowy</span><span>Rodzicielstwo</span><span>Rozwój osobisty</span><span>Podróże</span><span>Gotowanie i jedzenie</span><span>Technologia i gadżety</span><span>Ogród i dom</span><span>Moda i uroda</span><span>Biznes</span><span>i wiele innych</span></div>
+      <p>Zestaw sprawdzi się zarówno wtedy, gdy dopiero planujesz swoją pierwszą ofertę cyfrową, jak i wtedy, gdy szukasz nowych pomysłów na rozwój istniejącej działalności.</p>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="product" id="prompty">
+    <div class="cover"><img src="c/prompty.jpg" alt="Okładka: 10000+ promptów ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>10 000+ promptów ChatGPT w 100+ kategoriach</h2>
+      <p class="lead">Marketing, sprzedaż, obsługa klienta, biznes i produktywność.</p>
+      <p>Niezależnie od tego, czy rozwijasz własny biznes, planujesz kampanię marketingową, zarządzasz zespołem czy szukasz sposobów na lepszą organizację pracy, znajdziesz tu gotowe polecenia dopasowane do różnych zadań. Wystarczy wybrać odpowiedni prompt, dostosować go do swoich potrzeb i wykorzystać w praktyce.</p>
+      <h3>Różne obszary, mnóstwo możliwości</h3>
+      <p>Baza obejmuje ponad 10 000 promptów z kategorii takich jak:</p>
+      <div class="tags"><span>Biznes i rozwój firmy</span><span>Obsługa klienta</span><span>HR i zarządzanie zespołem</span><span>Marketing i strategia</span><span>Produktywność</span><span>Sprzedaż</span><span>Startupy</span></div>
+      <p>Gotowe polecenia pomogą Ci szukać nowych pomysłów, przygotowywać plany działania, usprawniać komunikację z klientami i sprawniej realizować codzienne zadania. Zamiast za każdym razem zastanawiać się, jak sformułować polecenie, korzystasz z gotowej bazy i dopasowujesz ją do konkretnego celu.</p>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="product" id="planer">
+    <div class="cover"><img src="c/planer.jpg" alt="Okładka: Content planer" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>Planer contentu do social mediów</h2>
+      <p class="lead">Zaplanuj cały miesiąc publikacji w jednym miejscu.</p>
+      <p>Pomysły na posty, terminy publikacji, podpisy, hashtagi i statusy realizacji: łatwo stracić nad tym kontrolę, gdy prowadzisz kilka kanałów jednocześnie. Ten edytowalny kalendarz treści na 30 dni pomoże Ci uporządkować pracę i przejść od pierwszego pomysłu do gotowej publikacji.</p>
+      <h3>Co ułatwi Ci ten planer?</h3>
+      <ul>
+        <li><b>Planowanie na cały miesiąc:</b> przegląd treści w kalendarzu pozwala rozłożyć publikacje w czasie i lepiej zaplanować działania.</li>
+        <li><b>Szczegóły każdego materiału:</b> zapisuj pomysły na elementy wizualne, podpisy, hashtagi, dźwięki i wezwania do działania (CTA).</li>
+        <li><b>Kontrola procesu tworzenia:</b> śledź kolejne etapy pracy, od burzy mózgów i nagrywania, przez edycję i zatwierdzanie, aż po publikację i ponowne wykorzystanie materiałów.</li>
+        <li><b>Współpraca z zespołem:</b> korzystaj ze statusów, pasków postępu i etapów akceptacji, aby łatwiej koordynować zadania jako menedżer mediów społecznościowych lub wirtualna asystentka.</li>
+      </ul>
+      <h3>Dopasuj kalendarz do swojego sposobu pracy</h3>
+      <p>Planer możesz dostosować do własnych potrzeb, dodając platformy, filary i formaty treści oraz statusy realizacji. Sprawdzi się przy planowaniu publikacji na Instagramie, YouTubie, TikToku, Facebooku, Pintereście i innych kanałach.</p>
+      <p>Szablon automatycznie uzupełnia daty i działa w Arkuszach Google. Możesz korzystać z niego na komputerze, tablecie lub telefonie.</p>
+    </div>
+  </article>
+
+  <!-- 11 -->
+  <article class="product" id="newslettery">
+    <div class="cover"><img src="c/newslettery.jpg" alt="Okładka: 30 gotowych newsletterów" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</h2>
+      <p class="lead">Nie każda wiadomość e-mail musi powstawać od zera.</p>
+      <p>W tym zestawie znajdziesz gotowe projekty, które możesz wykorzystać do informowania o nowościach, prezentowania produktów, przypominania o niedokończonych zakupach czy utrzymywania kontaktu z klientami. Wybierz odpowiedni układ, dodaj własną treść i dopasuj wygląd do swojej marki.</p>
+      <h3>Jakie wiadomości możesz przygotować?</h3>
+      <ul>
+        <li>Powitalne e-maile dla nowych subskrybentów</li>
+        <li>Newslettery edukacyjne z poradami, wskazówkami i aktualnościami z bloga</li>
+        <li>Wiadomości sprzedażowe, zapowiedzi promocji i prezentacje produktów</li>
+        <li>Przypomnienia o porzuconych koszykach i zachęty do ponownych zakupów</li>
+        <li>E-maile z podziękowaniami, prośbami o opinię i ankietami</li>
+        <li>Wiadomości o bestsellerach i darmowej dostawie</li>
+        <li>E-maile zachęcające do obserwowania profili społecznościowych, zapisania się na SMS-y lub polecania marki znajomym</li>
+        <li>Wiadomości urodzinowe, informacje o nowych odcinkach podcastu i inne treści angażujące odbiorców</li>
+      </ul>
+      <h3>Dostosuj projekty do swojej marki</h3>
+      <p>Każdy z 30 szablonów możesz edytować w Canvie. Szablony możesz wykorzystywać w różnych kampaniach, łączyć ze sobą i ponownie dostosowywać do kolejnych potrzeb. To wygodne rozwiązanie, jeśli chcesz zachować spójny wygląd komunikacji e-mailowej i sprawniej przygotowywać newslettery.</p>
+    </div>
+  </article>
+
+  <!-- 12 -->
+  <article class="product" id="shortcody">
+    <div class="cover"><img src="c/shortcody.jpg" alt="Okładka: 350 shortcodów do ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <span class="badge">Webbook</span>
+      <h2>Shortcody ChatGPT. 350 gotowych komend do obrazów i wideo</h2>
+      <p class="lead">Twórz profesjonalne materiały wizualne, które nie wyglądają jak typowe grafiki AI.</p>
+      <p>W tym webbooku znajdziesz 350 gotowych komend, które pomogą Ci tworzyć bardziej przemyślane, estetyczne i profesjonalne materiały wizualne, zamiast obrazów z charakterystycznym „efektem AI”.</p>
+      <p>Nie musisz za każdym razem zastanawiać się, jak napisać skuteczny prompt. Wybierz gotową komendę, dopasuj ją do swojej wizji i odkryj nowe możliwości tworzenia z AI.</p>
+      <h3>Co znajdziesz w środku?</h3>
+      <ul>
+        <li>350 gotowych shortcodów do obrazów i wideo, podzielonych na kategorie</li>
+        <li>Komendy do zdjęć produktowych, które wyglądają jak z profesjonalnej sesji</li>
+        <li>Style graficzne: od realistycznych zdjęć po ilustracje, schematy i projekty techniczne</li>
+        <li>Komendy do grafik na social media, okładek i materiałów reklamowych</li>
+        <li>Shortcody do tworzenia krótkich form wideo i animacji</li>
+        <li>Instrukcję, jak używać shortcodów w ChatGPT i jak łączyć je ze sobą</li>
+        <li>Wskazówki, jak dopasować każdą komendę do własnej marki i stylu</li>
+      </ul>
+      <h3>Co zyskujesz?</h3>
+      <ul>
+        <li><b>Oszczędność czasu:</b> zamiast pisać długie prompty, wpisujesz jedną komendę.</li>
+        <li><b>Lepszą jakość:</b> obrazy bez typowego „efektu AI”, które możesz śmiało publikować.</li>
+        <li><b>Spójny wygląd materiałów,</b> bo te same komendy dają powtarzalny styl.</li>
+        <li><b>Gotowe pomysły,</b> gdy brakuje Ci inspiracji.</li>
+        <li><b>Swobodę tworzenia</b> bez znajomości grafiki i bez drogich programów.</li>
+      </ul>
+      <h3>Dla kogo jest to narzędzie?</h3>
+      <p>Dla twórców internetowych, właścicieli małych firm, marketerów i wszystkich, którzy chcą tworzyć estetyczne materiały wizualne z AI, szybciej i bez zgadywania, jak napisać dobry prompt.</p>
+    </div>
+  </article>
+
+  <!-- 13 -->
+  <article class="product" id="rolki-claude">
+    <div class="cover"><img src="c/rolki-claude.jpg" alt="Okładka: Edytowanie reelsów w Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <span class="badge">Tutorial krok po kroku</span>
+      <h2>Edytowanie reelsów w Claude Code</h2>
+      <p class="lead">Nie każda rolka musi oznaczać godziny w aplikacji do montażu.</p>
+      <p>W tym przewodniku krok po kroku nauczysz się montować rolki z Claude: przynosisz surowe nagranie, na którym mówisz do kamery, a Claude buduje cały montaż za Ciebie. Robi napisy słowo po słowie, wyróżnia hasła, dodaje naklejki i zdjęcia produktów oraz wyrównuje dźwięk. Podgląd oglądasz na żywo, a poprawki podajesz zwykłą wiadomością z numerem klatki.</p>
+      <h3>Czego się nauczysz?</h3>
+      <ul>
+        <li>Instalacji krok po kroku na macOS, Windows i Linuksie, z gotowymi poleceniami do skopiowania</li>
+        <li>Automatycznej transkrypcji z czasem każdego słowa, także dla nagrań po polsku</li>
+        <li>Dopasowania stylu montażu do rolki wzorcowej, która Ci się podoba</li>
+        <li>Dodawania logo, okładek produktów i logotypów partnerów z wyciętym tłem</li>
+        <li>Szybkich poprawek: jedna uwaga z numerem klatki i gotowe</li>
+        <li>Wyrównania głośności ujęć i ustawienia dźwięku pod Instagram (−14 LUFS)</li>
+        <li>Eksportu gotowego filmu MP4 w formacie 1080×1920</li>
+        <li>Zasad projektowania rolek: strefy bezpieczne kadru, miejsce na napisy i naklejki, czego unikać</li>
+        <li>Rozwiązywania najczęstszych problemów, gdy coś nie działa</li>
+      </ul>
+      <h3>Gotowe polecenia w zestawie</h3>
+      <p>Pięć poleceń do skopiowania: start projektu, dopasowanie stylu, materiały marki, kontrola dźwięku i eksport. Uzupełniasz nawiasy, wysyłasz i gotowe. Instalację robisz raz (ok. 1 godziny), a każdą kolejną rolkę zaczynasz od skopiowania gotowego projektu, więc styl i ustawienia przechodzą dalej. To wygodne rozwiązanie, jeśli regularnie publikujesz rolki i chcesz utrzymać spójny wygląd bez ręcznego montażu.</p>
+    </div>
+  </article>
+
+  <!-- 14 -->
+  <article class="product" id="manychat">
+    <div class="cover"><img src="c/manychat.jpg" alt="Okładka: 30 szablonów automatyzacji ManyChat" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <h2>30 szablonów automatyzacji ManyChat</h2>
+      <p class="lead">Automatyczne wiadomości. Zbieraj leady. Sprzedawaj każdego dnia.</p>
+      <p>Usprawnij działania marketingowe i zadbaj o sprawniejszą komunikację z odbiorcami dzięki zestawowi 30 gotowych automatyzacji ManyChat. Znajdziesz tu różnorodne rozwiązania, które pomogą Ci promować ofertę, pozyskiwać potencjalnych klientów, rozwijać społeczność i zwiększać zaangażowanie na Instagramie oraz TikToku.</p>
+      <h3>Co zawiera zestaw?</h3>
+      <ul>
+        <li><b>Automatyzacje sprzedażowe:</b> sprzedaż przez Instagram Stories i transmisje na żywo, kupony rabatowe, oferty dodatkowe oraz promocje po kliknięciu reklamy.</li>
+        <li><b>Kontakt z odbiorcami:</b> odpowiedzi na często zadawane pytania, zbieranie opinii, ankiety i wdrażanie nowych klientów.</li>
+        <li><b>Pozyskiwanie leadów:</b> budowanie listy e-mailowej, promocja kursów online, obsługa zapisów na webinary i generowanie kontaktów z reklam.</li>
+        <li><b>Rozwój społeczności:</b> zwiększanie liczby widzów na YouTube, konkursy, programy partnerskie i działania angażujące obserwujących.</li>
+        <li><b>Interaktywne funkcje:</b> quizy marketingowe, gry typu „mit czy fakt”, generatory stylu marketingowego, ciasteczka z wróżbą oraz boty do zabaw z odbiorcami.</li>
+      </ul>
+      <h3>Dla kogo?</h3>
+      <p>Zestaw sprawdzi się u specjalistów ds. marketingu cyfrowego, przedsiębiorców, właścicieli firm internetowych i menedżerów mediów społecznościowych. To praktyczna baza gotowych rozwiązań, które możesz dostosować do swojej marki i celów, zamiast tworzyć każdą automatyzację od podstaw.</p>
+    </div>
+  </article>
+
+  <footer>
+    <em>Mniej wymyślania. <span>Więcej tworzenia.</span></em>
+    CreateOn Studio · @createonstudio
+    <br><a class="top-link" href="#top">Wróć do listy produktów ↑</a>
+  </footer>
+</div>
+
+</body></html>
