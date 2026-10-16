@@ -3,100 +3,133 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,400..600&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..700&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
 <style>
-/* Layout: a product shelf. Covers sit in a browsable shelf at the top; below,
-   each product is a spread: cover on the left, copy on the right, like the
-   brand's own product cards. */
+/* Layout: night gallery. A slow, flowing fabric field (canvas) sits fixed behind
+   the page; every product floats over it as a frosted-glass spread. Fixed corner
+   marks frame the screen: brand top-left, scroll hint and product counter at the bottom.
+   One deliberate dark look, independent of the viewer's theme. */
 :root {
-  --bg: #F7F6F2;
-  --surface: #FFFFFF;
-  --ink: #17153F;
-  --text: #2B2A36;
-  --muted: #6B6875;
-  --line: #E4E1D8;
-  --navy: #1B1866;
-  --orange: #D65F35;
-  --chip: #F1EDE4;
-  --display: "Fraunces", Georgia, "Times New Roman", serif;
-  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+  --night: #000002;
+  --ink: #F0F0EB;
+  --soft: rgba(240, 240, 235, .72);
+  --faint: rgba(240, 240, 235, .5);
+  --glass: rgba(18, 20, 28, .7);
+  --glass-2: rgba(24, 24, 28, .45);
+  --edge: rgba(255, 255, 255, .2);
+  --amber: #E8A55C;
+  --navy: #2A3F9E;
+  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --script: "Fraunces", Georgia, serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #121124; --surface: #1B1A31; --ink: #F1EFF8; --text: #DAD8E4; --muted: #A09DB0;
-    --line: #2E2C47; --navy: #A9A6FF; --orange: #F08458; --chip: #24223D; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #121124; --surface: #1B1A31; --ink: #F1EFF8; --text: #DAD8E4; --muted: #A09DB0;
-  --line: #2E2C47; --navy: #A9A6FF; --orange: #F08458; --chip: #24223D; color-scheme: dark;
-}
-
 * { box-sizing: border-box; }
+html { background: var(--night); }
 body {
-  background: var(--bg); color: var(--text);
-  font-family: var(--body); font-size: 16px; line-height: 1.65;
+  background: var(--night); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.65; font-weight: 400;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 72px;
+  padding-block: 0 120px;
 }
 a { color: inherit; }
-a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
-.wrap { max-width: 1080px; margin: 0 auto; }
+a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
 
-/* Header */
-header.top { padding-block: 28px 8px; display: grid; justify-items: center; gap: 4px; text-align: center; }
-.logo { width: min(520px, 100%); border-radius: 10px; display: block; }
-.intro { max-width: 60ch; margin: 18px auto 0; color: var(--muted); font-size: 17px; }
+#field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.veil { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 35%, rgba(0,0,2,.0) 0%, rgba(0,0,2,.55) 75%); }
+
+/* Fixed frame marks */
+.mark { position: fixed; z-index: 3; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); }
+.brand { top: calc(env(safe-area-inset-top, 0px) + 22px); left: max(24px, calc(env(safe-area-inset-left, 0px) + 16px)); display: flex; gap: 12px; align-items: center; text-decoration: none; }
+.brand svg { width: 26px; height: 14px; }
+.brand b { display: block; font-size: 13px; letter-spacing: .16em; font-weight: 700; }
+.brand span { color: var(--faint); }
+.hint { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); left: max(24px, calc(env(safe-area-inset-left, 0px) + 16px)); color: var(--soft); }
+.count { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); right: max(24px, calc(env(safe-area-inset-right, 0px) + 16px)); color: var(--soft); font-variant-numeric: tabular-nums; }
+.progress { position: fixed; z-index: 3; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255,255,255,.08); }
+.progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--navy), var(--amber)); }
+
+.wrap { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; padding-top: 140px; }
+
+.glass { background: var(--glass); border: 1px solid var(--edge); border-radius: 24px;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { padding: clamp(28px, 5vw, 56px); display: grid; gap: 18px; max-width: 920px; margin-top: 8vh; }
+.hero h1 { margin: 0; font-weight: 400; font-size: clamp(42px, 6.4vw, 80px); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
+.hero h1 em { font-family: var(--script); font-style: italic; font-weight: 400; letter-spacing: -.02em; color: var(--amber); }
+.hero p { margin: 0; color: var(--soft); max-width: 52ch; }
+.wordmark { font-family: var(--script); font-size: 28px; letter-spacing: -.01em; line-height: 1; }
+.wordmark i { color: var(--amber); }
+.wordmark small { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: .5em; color: var(--faint); margin-top: 6px; }
 
 /* Shelf */
-.shelf-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 40px 0 14px; display: flex; justify-content: space-between; gap: 12px; }
-.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+.shelf-card { padding: 24px; display: grid; gap: 16px; margin-top: 30vh; }
+.shelf-head { display: flex; justify-content: space-between; gap: 12px; }
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 900px) { .shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } }
-.shelf a { display: grid; gap: 6px; text-decoration: none; }
-.shelf img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: var(--surface); border-radius: 8px; border: 1px solid var(--line); transition: transform .2s ease, border-color .2s ease; }
-.shelf a:hover img { transform: translateY(-3px); border-color: var(--orange); }
-.shelf span { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
-@media (prefers-reduced-motion: reduce) { .shelf img { transition: none; } .shelf a:hover img { transform: none; } }
+@media (max-width: 520px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .shelf-card { padding: 16px; } }
+.shelf a { display: grid; gap: 8px; text-decoration: none; }
+.shelf img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #fff; border-radius: 12px; transition: transform .3s ease, box-shadow .3s ease; }
+.shelf a:hover img { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(232,165,92,.25); }
+.shelf span { font-size: 12px; line-height: 1.3; color: var(--soft); }
 
 /* Product spreads */
-.product { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; padding-block: 64px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
-.product:first-of-type { margin-top: 56px; }
-@media (max-width: 760px) { .product { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 48px; } }
-.cover { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); display: grid; gap: 14px; }
-@media (max-width: 760px) { .cover { position: static; max-width: 360px; } }
-.cover img { width: 100%; border-radius: 12px; background: #fff; display: block; }
-.avail { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--orange); }
-.avail b { font-style: normal; font-weight: 600; color: var(--navy); }
+.product { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; padding: clamp(20px, 4vw, 44px); scroll-margin-top: 90px; margin-top: 22vh;
+  background: var(--glass); border: 1px solid var(--edge); border-radius: 24px; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+@media (max-width: 760px) { .product { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 14vh; } }
+.cover { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 90px); display: grid; gap: 14px; }
+@media (max-width: 760px) { .cover { position: static; max-width: 340px; } }
+.cover img { width: 100%; border-radius: 16px; background: #fff; display: block; }
+.avail { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.avail b { color: var(--amber); font-weight: 600; }
 
 .copy { min-width: 0; display: grid; gap: 16px; align-content: start; }
-.copy h2 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.1; color: var(--ink); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
-.copy .lead { font-weight: 600; color: var(--ink); font-size: 18px; margin: 0; }
-.copy p { margin: 0; max-width: 64ch; }
-.copy h3 { font-family: var(--display); font-weight: 600; font-size: 21px; color: var(--navy); margin: 12px 0 0; text-wrap: balance; }
-.copy ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 64ch; }
-.copy li { position: relative; padding-left: 22px; }
-.copy li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
-.copy li b { color: var(--ink); }
+.copy h2 { font-weight: 400; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.04; letter-spacing: -.045em; margin: 0; text-wrap: balance; }
+.copy .lead { color: var(--ink); font-size: 18px; font-weight: 500; margin: 0; max-width: 56ch; }
+.copy p { margin: 0; max-width: 64ch; color: var(--soft); }
+.copy h3 { font-weight: 500; font-size: 20px; letter-spacing: -.02em; margin: 14px 0 0; text-wrap: balance; }
+.copy ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 64ch; }
+.copy li { padding: 10px 14px 10px 36px; position: relative; background: var(--glass-2); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; color: var(--soft); }
+.copy li::before { content: ""; position: absolute; left: 15px; top: 1.15em; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--amber)); }
+.copy li b { color: var(--ink); font-weight: 600; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tags span { background: var(--chip); color: var(--ink); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
-.badge { justify-self: start; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.tags span { border: 1px solid var(--edge); border-radius: 999px; padding: 4px 12px; font-size: 14px; color: var(--soft); }
+.badge { justify-self: start; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); }
 
-footer { text-align: center; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 32px; }
-footer em { font-family: var(--display); font-size: 20px; color: var(--navy); display: block; margin-bottom: 6px; }
-footer em span { color: var(--orange); }
-.top-link { display: inline-block; margin-top: 14px; color: var(--orange); }
+footer { margin-top: 26vh; padding: 36px; text-align: center; display: grid; gap: 10px; justify-items: center; }
+footer .big { font-size: clamp(30px, 5vw, 52px); letter-spacing: -.05em; line-height: 1.05; }
+footer .big em { font-family: var(--script); font-style: italic; color: var(--amber); letter-spacing: -.02em; }
+footer .label a { color: var(--amber); text-decoration: none; }
+
+@media (max-width: 600px) { .hint { display: none; } .wrap { padding-top: 96px; } .hero { margin-top: 6vh; } }
+@media (prefers-reduced-motion: reduce) { .shelf img { transition: none; } .shelf a:hover img { transform: none; } }
 </style>
 
-<div class="wrap">
-  <header class="top" id="top">
-    <img class="logo" src="logo.png" alt="CreateOn Studio – Mniej wymyślania. Więcej tworzenia.">
-    <p class="intro">Gotowe szablony, bazy pomysłów i przewodniki dla twórców, marek osobistych i małych firm. Wybierz produkt, aby zobaczyć, co zawiera.</p>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="veil"></div>
+
+<a class="mark brand" href="#top" aria-label="Na górę strony">
+  <svg viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 9c3-7 6-7 8 0s5 7 8 0 6-7 8 0"/></svg>
+  <div><b>CreateOn</b><span>Studio / Katalog</span></div>
+</a>
+<div class="mark hint">Przewiń, aby odkryć produkty</div>
+<div class="mark count" id="count">00 / 14</div>
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+<div class="wrap" id="top">
+  <header class="hero glass">
+    <div class="wordmark">create<i>on</i><small>STUDIO</small></div>
+    <div class="label">Szablony · Prompty · Przewodniki</div>
+    <h1>Mniej wymyślania. <em>Więcej tworzenia.</em></h1>
+    <p>Gotowe szablony, bazy pomysłów i przewodniki dla twórców, marek osobistych i małych firm. Wybierz produkt, aby zobaczyć, co zawiera.</p>
   </header>
 
-  <div class="shelf-label"><span>Wszystkie produkty</span><span>14</span></div>
-  <ol class="shelf">
+  <section class="shelf-card glass" aria-label="Wszystkie produkty">
+    <div class="shelf-head label"><span>Wszystkie produkty</span><span>14</span></div>
+    <ol class="shelf">
     <li><a href="#mockupy"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów Mockup</span></a></li>
     <li><a href="#hooki"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ hooków</span></a></li>
     <li><a href="#naklejki"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ naklejek</span></a></li>
@@ -112,11 +145,12 @@ footer em span { color: var(--orange); }
     <li><a href="#rolki-claude"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><span>Reelsy w Claude</span></a></li>
     <li><a href="#manychat"><img src="c/manychat.jpg" alt="" loading="lazy"><span>30 automatyzacji ManyChat</span></a></li>
   </ol>
+  </section>
 
-  <!-- 1 -->
-  <article class="product" id="mockupy">
+  <article class="product" data-n="01" id="mockupy">
     <div class="cover"><img src="c/mockupy.jpg" alt="Okładka: 1000 szablonów mockupów"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">01 / MOCKUPY</div>
       <h2>1000 szablonów Mockup do promocji i sprzedaży produktów</h2>
       <p class="lead">Gotowe rozwiązanie, które pozwala szybko przygotować profesjonalne oferty i zacząć sprzedawać bez żmudnego projektowania każdego elementu od zera.</p>
       <p>Otrzymujesz ponad 1000 estetycznych, profesjonalnych makiet, które możesz łatwo edytować w Canvie i dopasować do charakteru swoich produktów oraz marki. Zamiast zaczynać od pustego projektu, wybierasz gotowy szablon, dodajesz swoje treści i grafiki, i Twoja oferta jest gotowa do publikacji.</p>
@@ -133,10 +167,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 2 -->
-  <article class="product" id="hooki">
+<article class="product" data-n="02" id="hooki">
     <div class="cover"><img src="c/hooki.jpg" alt="Okładka: 450+ najlepszych hooków na Instagram i TikTok" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">02 / HOOKI</div>
       <h2>450+ najlepszych hooków na Instagram i TikTok</h2>
       <p class="lead">Masz tylko 3 sekundy, aby zatrzymać uwagę odbiorcy.</p>
       <p>Ta zoptymalizowana baza ponad 450 przetestowanych zdań otwierających i hooków daje Ci natychmiastową przewagę na Instagramie i TikToku.</p>
@@ -155,10 +189,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 3 -->
-  <article class="product" id="naklejki">
+<article class="product" data-n="03" id="naklejki">
     <div class="cover"><img src="c/naklejki.jpg" alt="Okładka: 500+ estetycznych naklejek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">03 / NAKLEJKI</div>
       <h2>500+ estetycznych naklejek karuzelowych</h2>
       <p class="lead">Sezonowe i estetyczne naklejki na relacje i karuzele.</p>
       <p>Zestaw ponad 500 estetycznych naklejek graficznych to niezbędne narzędzie dla każdego influencera, twórcy i marki osobistej, której zależy na spójnym i przyciągającym wzrok wyglądzie profilu.</p>
@@ -166,10 +200,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 4 -->
-  <article class="product" id="identyfikacja">
+<article class="product" data-n="04" id="identyfikacja">
     <div class="cover"><img src="c/identyfikacja.jpg" alt="Okładka: Brand board szablony" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">04 / BRANDING</div>
       <h2>40 szablonów identyfikacji wizualnej marki w Canva</h2>
       <p class="lead">Zadbaj o profesjonalny i spójny wizerunek swojej marki dzięki kolekcji edytowalnych szablonów.</p>
       <p>To praktyczne narzędzie dla właścicieli małych firm, twórców internetowych, projektantów, trenerów oraz osób sprzedających produkty cyfrowe.</p>
@@ -188,10 +222,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 5 -->
-  <article class="product" id="cta">
+<article class="product" data-n="05" id="cta">
     <div class="cover"><img src="c/cta.jpg" alt="Okładka: 101 wezwań do działania" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">05 / CTA</div>
       <h2>101 wezwań do działania (CTA), które pomogą Ci sprzedawać</h2>
       <p class="lead">Wybierasz, kopiujesz i wklejasz do swojej treści.</p>
       <p>Zestaw 101 gotowych wezwań do działania w formie webbooka pomoże Ci tworzyć treści, które nie tylko przyciągają uwagę, ale przede wszystkim skłaniają odbiorców do wykonania konkretnego kroku.</p>
@@ -205,10 +239,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 6 -->
-  <article class="product" id="macierzynstwo">
+<article class="product" data-n="06" id="macierzynstwo">
     <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 1500+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">06 / ROLKI</div>
       <h2>1500+ rolek o macierzyństwie</h2>
       <p class="lead">Twórz atrakcyjne rolki o macierzyństwie bez konieczności projektowania każdego filmu od podstaw.</p>
       <p>Dzięki gotowym szablonom szybko przygotujesz treści do mediów społecznościowych, podzielisz się doświadczeniami związanymi z rodzicielstwem, pokażesz codzienne życie rodzinne lub wypromujesz swoją markę. To praktyczne rozwiązanie dla zapracowanych mam, przedsiębiorców i influencerów, którzy chcą regularnie publikować estetyczne, dopracowane materiały.</p>
@@ -228,10 +262,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 7 -->
-  <article class="product" id="wellness">
+<article class="product" data-n="07" id="wellness">
     <div class="cover"><img src="c/wellness.jpg" alt="Okładka: 850+ gotowych rolek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">07 / WELLNESS</div>
       <h2>850+ gotowych rolek: zdrowy styl życia, afirmacje i równowaga</h2>
       <p class="lead">Afirmacje, spokojne kadry, uważność i codzienne dbanie o siebie.</p>
       <p>Ten zestaw łączy ponad 850 materiałów, które możesz wykorzystać w komunikacji swojej marki wellness. Znajdziesz tu zarówno krótkie, bezosobowe rolki, jak i filmy o zdrowiu oraz gotowe projekty na Instagram. Dzięki temu łatwiej dopasujesz publikacje do tematyki swojego profilu i osób, do których chcesz dotrzeć.</p>
@@ -251,10 +285,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 8 -->
-  <article class="product" id="pomysly">
+<article class="product" data-n="08" id="pomysly">
     <div class="cover"><img src="c/pomysly.jpg" alt="Okładka: 500 pomysłów na produkt cyfrowy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">08 / POMYSŁY</div>
       <h2>Pomysły na produkty cyfrowe i treści sprzedażowe</h2>
       <p class="lead">Masz pomysł na rozwój swojego profilu, ale brakuje Ci konkretnego planu?</p>
       <p>Ten zestaw pomoże Ci uporządkować działania na Instagramie i znaleźć inspiracje do stworzenia własnych produktów cyfrowych. W środku czeka praktyczny poradnik o relacjach (Stories), który pokazuje, jak planować publikacje, przyciągać uwagę odbiorców, wykorzystywać CTA, budować spójny branding i prezentować swoją ofertę. Do tego otrzymujesz ponad 500 pomysłów na produkty cyfrowe, które możesz opracować i wprowadzić do sprzedaży.</p>
@@ -271,10 +305,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 9 -->
-  <article class="product" id="prompty">
+<article class="product" data-n="09" id="prompty">
     <div class="cover"><img src="c/prompty.jpg" alt="Okładka: 10000+ promptów ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">09 / PROMPTY</div>
       <h2>10 000+ promptów ChatGPT w 100+ kategoriach</h2>
       <p class="lead">Marketing, sprzedaż, obsługa klienta, biznes i produktywność.</p>
       <p>Niezależnie od tego, czy rozwijasz własny biznes, planujesz kampanię marketingową, zarządzasz zespołem czy szukasz sposobów na lepszą organizację pracy, znajdziesz tu gotowe polecenia dopasowane do różnych zadań. Wystarczy wybrać odpowiedni prompt, dostosować go do swoich potrzeb i wykorzystać w praktyce.</p>
@@ -285,10 +319,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 10 -->
-  <article class="product" id="planer">
+<article class="product" data-n="10" id="planer">
     <div class="cover"><img src="c/planer.jpg" alt="Okładka: Content planer" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">10 / PLANER</div>
       <h2>Planer contentu do social mediów</h2>
       <p class="lead">Zaplanuj cały miesiąc publikacji w jednym miejscu.</p>
       <p>Pomysły na posty, terminy publikacji, podpisy, hashtagi i statusy realizacji: łatwo stracić nad tym kontrolę, gdy prowadzisz kilka kanałów jednocześnie. Ten edytowalny kalendarz treści na 30 dni pomoże Ci uporządkować pracę i przejść od pierwszego pomysłu do gotowej publikacji.</p>
@@ -305,10 +339,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 11 -->
-  <article class="product" id="newslettery">
+<article class="product" data-n="11" id="newslettery">
     <div class="cover"><img src="c/newslettery.jpg" alt="Okładka: 30 gotowych newsletterów" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">11 / E-MAIL</div>
       <h2>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</h2>
       <p class="lead">Nie każda wiadomość e-mail musi powstawać od zera.</p>
       <p>W tym zestawie znajdziesz gotowe projekty, które możesz wykorzystać do informowania o nowościach, prezentowania produktów, przypominania o niedokończonych zakupach czy utrzymywania kontaktu z klientami. Wybierz odpowiedni układ, dodaj własną treść i dopasuj wygląd do swojej marki.</p>
@@ -328,10 +362,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 12 -->
-  <article class="product" id="shortcody">
+<article class="product" data-n="12" id="shortcody">
     <div class="cover"><img src="c/shortcody.jpg" alt="Okładka: 350 shortcodów do ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">12 / SHORTCODY</div>
       <span class="badge">Webbook</span>
       <h2>Shortcody ChatGPT. 350 gotowych komend do obrazów i wideo</h2>
       <p class="lead">Twórz profesjonalne materiały wizualne, które nie wyglądają jak typowe grafiki AI.</p>
@@ -360,10 +394,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 13 -->
-  <article class="product" id="rolki-claude">
+<article class="product" data-n="13" id="rolki-claude">
     <div class="cover"><img src="c/rolki-claude.jpg" alt="Okładka: Edytowanie reelsów w Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">13 / TUTORIAL</div>
       <span class="badge">Tutorial krok po kroku</span>
       <h2>Edytowanie reelsów w Claude Code</h2>
       <p class="lead">Nie każda rolka musi oznaczać godziny w aplikacji do montażu.</p>
@@ -385,10 +419,10 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <!-- 14 -->
-  <article class="product" id="manychat">
+<article class="product" data-n="14" id="manychat">
     <div class="cover"><img src="c/manychat.jpg" alt="Okładka: 30 szablonów automatyzacji ManyChat" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
+      <div class="label">14 / MANYCHAT</div>
       <h2>30 szablonów automatyzacji ManyChat</h2>
       <p class="lead">Automatyczne wiadomości. Zbieraj leady. Sprzedawaj każdego dnia.</p>
       <p>Usprawnij działania marketingowe i zadbaj o sprawniejszą komunikację z odbiorcami dzięki zestawowi 30 gotowych automatyzacji ManyChat. Znajdziesz tu różnorodne rozwiązania, które pomogą Ci promować ofertę, pozyskiwać potencjalnych klientów, rozwijać społeczność i zwiększać zaangażowanie na Instagramie oraz TikToku.</p>
@@ -405,11 +439,101 @@ footer em span { color: var(--orange); }
     </div>
   </article>
 
-  <footer>
-    <em>Mniej wymyślania. <span>Więcej tworzenia.</span></em>
-    CreateOn Studio · @createonstudio
-    <br><a class="top-link" href="#top">Wróć do listy produktów ↑</a>
+  <footer class="glass">
+    <div class="big">Mniej wymyślania. <em>Więcej tworzenia.</em></div>
+    <div class="label">CreateOn Studio · @createonstudio</div>
+    <div class="label"><a href="#top">Wróć na górę ↑</a></div>
   </footer>
 </div>
+
+<script>
+(function () {
+  /* Flowing fabric field: vertical folds lit amber at the centre, navy at the edges. */
+  var cv = document.getElementById('field');
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = 1, t = 0, scrollPhase = 0;
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NAVY = [44, 72, 200], AMBER = [250, 172, 92], DEEP = [4, 6, 22];
+
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function mix(a, b, k) { return [0, 1, 2].map(function (i) { return Math.round(a[i] + (b[i] - a[i]) * k); }); }
+  function rgb(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
+
+  function edge(x0, y, i, ph) {
+    return x0 + Math.sin(y * 0.006 + ph + i * 0.7) * 26 + Math.sin(y * 0.013 - ph * 1.3 + i) * 12;
+  }
+
+  function draw() {
+    ctx.fillStyle = '#000002';
+    ctx.fillRect(0, 0, W, H);
+    var K = Math.max(14, Math.round(W / 46));
+    var fw = W / K * 1.9;
+    var ph = t + scrollPhase;
+    for (var i = -2; i < K + 2; i++) {
+      var x0 = i * (W / K);
+      var centre = 1 - Math.min(1, Math.abs((x0 + fw / 2) - W * 0.55) / (W * 0.55));
+      var lit = mix(NAVY, AMBER, Math.pow(centre, 1.6));
+      var top = -40;
+      ctx.beginPath();
+      var step = 18, y;
+      ctx.moveTo(edge(x0, top, i, ph), top);
+      for (y = top; y <= H + step; y += step) ctx.lineTo(edge(x0, y, i, ph), y);
+      for (y = H + step; y >= top; y -= step) ctx.lineTo(edge(x0 + fw, y, i + 0.5, ph * 0.9), y);
+      ctx.closePath();
+      var g = ctx.createLinearGradient(x0, 0, x0 + fw, 0);
+      g.addColorStop(0, rgb(DEEP, 0.95));
+      g.addColorStop(0.45, rgb(lit, 1));
+      g.addColorStop(0.6, rgb(mix(lit, [255, 230, 190], 0.25 * centre), 0.9));
+      g.addColorStop(1, rgb(DEEP, 0.95));
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+    var fade = ctx.createLinearGradient(0, 0, 0, H);
+    fade.addColorStop(0, 'rgba(0,0,2,.55)');
+    fade.addColorStop(0.3, 'rgba(0,0,2,.2)');
+    fade.addColorStop(0.7, 'rgba(0,0,2,0)');
+    fade.addColorStop(1, 'rgba(20,10,10,.35)');
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  var last = 0;
+  function loop(ts) {
+    if (ts - last > 33) { t = ts / 4200; draw(); last = ts; }
+    requestAnimationFrame(loop);
+  }
+  size();
+  window.addEventListener('resize', function () { size(); draw(); });
+  if (still) draw(); else requestAnimationFrame(loop);
+
+  /* Scroll: progress bar, fabric phase, product counter. */
+  var bar = document.getElementById('bar');
+  var count = document.getElementById('count');
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - innerHeight;
+    var p = max > 0 ? scrollY / max : 0;
+    bar.style.width = (p * 100).toFixed(1) + '%';
+    scrollPhase = scrollY / 900;
+    if (still) draw();
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var products = Array.prototype.slice.call(document.querySelectorAll('.product'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) count.textContent = e.target.dataset.n + ' / 14'; });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    products.forEach(function (p) { io.observe(p); });
+    var shelf = document.querySelector('.shelf-card');
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) count.textContent = '00 / 14'; }); }, { rootMargin: '-45% 0px -45% 0px' }).observe(shelf);
+  }
+})();
+</script>
 
 </body></html>
