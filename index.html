@@ -1,6 +1,10 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000002">
 <title>Katalog CreateOn Studio</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..700&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
@@ -24,6 +28,8 @@
   --script: "Fraunces", Georgia, serif;
 }
 * { box-sizing: border-box; }
+img { max-width: 100%; }
+body { margin: 0; }
 html { background: var(--night); }
 body {
   background: var(--night); color: var(--ink);
@@ -68,7 +74,7 @@ a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-r
 /* Shelf */
 .shelf-card { padding: 24px; display: grid; gap: 16px; margin-top: 30vh; }
 .shelf-head { display: flex; justify-content: space-between; gap: 12px; }
-.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 900px) { .shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .shelf-card { padding: 16px; } }
 .shelf a { display: grid; gap: 8px; text-decoration: none; }
@@ -107,6 +113,9 @@ footer .label a { color: var(--amber); text-decoration: none; }
 @media (max-width: 600px) { .hint { display: none; } .wrap { padding-top: 96px; } .hero { margin-top: 6vh; } }
 @media (prefers-reduced-motion: reduce) { .shelf img { transition: none; } .shelf a:hover img { transform: none; } }
 </style>
+</head>
+<body>
+
 
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="veil"></div>
@@ -116,7 +125,7 @@ footer .label a { color: var(--amber); text-decoration: none; }
   <div><b>CreateOn</b><span>Studio / Katalog</span></div>
 </a>
 <div class="mark hint">Przewiń, aby odkryć produkty</div>
-<div class="mark count" id="count">00 / 14</div>
+<div class="mark count" id="count">00 / 16</div>
 <div class="progress" aria-hidden="true"><i id="bar"></i></div>
 
 <div class="wrap" id="top">
@@ -128,22 +137,24 @@ footer .label a { color: var(--amber); text-decoration: none; }
   </header>
 
   <section class="shelf-card glass" aria-label="Wszystkie produkty">
-    <div class="shelf-head label"><span>Wszystkie produkty</span><span>14</span></div>
+    <div class="shelf-head label"><span>Wszystkie produkty</span><span>16</span></div>
     <ol class="shelf">
     <li><a href="#mockupy"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów Mockup</span></a></li>
     <li><a href="#hooki"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ hooków</span></a></li>
     <li><a href="#naklejki"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ naklejek</span></a></li>
     <li><a href="#identyfikacja"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>Brand board</span></a></li>
     <li><a href="#cta"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 CTA</span></a></li>
-    <li><a href="#macierzynstwo"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>1500+ rolek o macierzyństwie</span></a></li>
+    <li><a href="#macierzynstwo"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>920+ rolek o macierzyństwie</span></a></li>
     <li><a href="#wellness"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek wellness</span></a></li>
     <li><a href="#pomysly"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt</span></a></li>
     <li><a href="#prompty"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów</span></a></li>
     <li><a href="#planer"><img src="c/planer.jpg" alt="" loading="lazy"><span>Content planer</span></a></li>
     <li><a href="#newslettery"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 newsletterów</span></a></li>
     <li><a href="#shortcody"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>350 shortcodów</span></a></li>
-    <li><a href="#rolki-claude"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><span>Reelsy w Claude</span></a></li>
+    <li><a href="#rolki-claude"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><span>Montuj rolki z Claude</span></a></li>
     <li><a href="#manychat"><img src="c/manychat.jpg" alt="" loading="lazy"><span>30 automatyzacji ManyChat</span></a></li>
+    <li><a href="#bez-twarzy"><img src="c/bez-twarzy.jpg" alt="" loading="lazy"><span>10 000+ rolek bez twarzy</span></a></li>
+    <li><a href="#podroze"><img src="c/podroze.jpg" alt="" loading="lazy"><span>900+ rolek podróżniczych</span></a></li>
   </ol>
   </section>
 
@@ -240,12 +251,12 @@ footer .label a { color: var(--amber); text-decoration: none; }
   </article>
 
 <article class="product" data-n="06" id="macierzynstwo">
-    <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 1500+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 920+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
       <div class="label">06 / ROLKI</div>
-      <h2>1500+ rolek o macierzyństwie</h2>
+      <h2>920+ rolek o macierzyństwie</h2>
       <p class="lead">Twórz atrakcyjne rolki o macierzyństwie bez konieczności projektowania każdego filmu od podstaw.</p>
-      <p>Dzięki gotowym szablonom szybko przygotujesz treści do mediów społecznościowych, podzielisz się doświadczeniami związanymi z rodzicielstwem, pokażesz codzienne życie rodzinne lub wypromujesz swoją markę. To praktyczne rozwiązanie dla zapracowanych mam, przedsiębiorców i influencerów, którzy chcą regularnie publikować estetyczne, dopracowane materiały.</p>
+      <p>Dzięki gotowym szablonom szybko przygotujesz treści do mediów społecznościowych, podzielisz się doświadczeniami związanymi z rodzicielstwem, pokażesz codzienne życie rodzinne lub wypromujesz swoją markę. Pakiet zawiera ponad 920 szablonów filmów o mamach i macierzyństwie. To praktyczne rozwiązanie dla zapracowanych mam, przedsiębiorców i influencerów, którzy chcą regularnie publikować estetyczne, dopracowane materiały.</p>
       <h3>Co otrzymujesz?</h3>
       <ul>
         <li>Ponad 90 filmów o macierzyństwie z gotowymi hookami, które możesz edytować w Canvie</li>
@@ -271,7 +282,6 @@ footer .label a { color: var(--amber); text-decoration: none; }
       <p>Ten zestaw łączy ponad 850 materiałów, które możesz wykorzystać w komunikacji swojej marki wellness. Znajdziesz tu zarówno krótkie, bezosobowe rolki, jak i filmy o zdrowiu oraz gotowe projekty na Instagram. Dzięki temu łatwiej dopasujesz publikacje do tematyki swojego profilu i osób, do których chcesz dotrzeć.</p>
       <h3>Zawartość zestawu</h3>
       <ul>
-        <li>150 bezosobowych rolek o duchowości z gotowymi napisami</li>
         <li>250 bezosobowych rolek na Instagram o duchowości i holistycznym stylu życia</li>
         <li>200 filmów o zdrowiu z gotowymi napisami</li>
         <li>Ponad 100 szablonów filmów z afirmacjami i ćwiczeniami uważności</li>
@@ -395,19 +405,18 @@ footer .label a { color: var(--amber); text-decoration: none; }
   </article>
 
 <article class="product" data-n="13" id="rolki-claude">
-    <div class="cover"><img src="c/rolki-claude.jpg" alt="Okładka: Edytowanie reelsów w Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="cover"><img src="c/rolki-claude.jpg" alt="Okładka: Montuj rolki z Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
       <div class="label">13 / TUTORIAL</div>
       <span class="badge">Tutorial krok po kroku</span>
-      <h2>Edytowanie reelsów w Claude Code</h2>
+      <h2>Montuj rolki z Claude</h2>
       <p class="lead">Nie każda rolka musi oznaczać godziny w aplikacji do montażu.</p>
-      <p>W tym przewodniku krok po kroku nauczysz się montować rolki z Claude: przynosisz surowe nagranie, na którym mówisz do kamery, a Claude buduje cały montaż za Ciebie. Robi napisy słowo po słowie, wyróżnia hasła, dodaje naklejki i zdjęcia produktów oraz wyrównuje dźwięk. Podgląd oglądasz na żywo, a poprawki podajesz zwykłą wiadomością z numerem klatki.</p>
+      <p>W tym przewodniku krok po kroku nauczysz się montować rolki z Claude: przynosisz surowe nagranie, na którym mówisz do kamery, a Claude buduje cały montaż za Ciebie. Robi napisy, wyróżnia hasła, dodaje naklejki i zdjęcia produktów oraz wyrównuje dźwięk. Podgląd oglądasz na żywo, a poprawki podajesz zwykłą wiadomością z numerem klatki.</p>
       <h3>Czego się nauczysz?</h3>
       <ul>
         <li>Instalacji krok po kroku na macOS, Windows i Linuksie, z gotowymi poleceniami do skopiowania</li>
         <li>Automatycznej transkrypcji z czasem każdego słowa, także dla nagrań po polsku</li>
-        <li>Dopasowania stylu montażu do rolki wzorcowej, która Ci się podoba</li>
-        <li>Dodawania logo, okładek produktów i logotypów partnerów z wyciętym tłem</li>
+        <li>Dopasowania stylu montażu do rolki wzorcowej, dodawania logo, okładek produktów i logotypów partnerów z wyciętym tłem</li>
         <li>Szybkich poprawek: jedna uwaga z numerem klatki i gotowe</li>
         <li>Wyrównania głośności ujęć i ustawienia dźwięku pod Instagram (−14 LUFS)</li>
         <li>Eksportu gotowego filmu MP4 w formacie 1080×1920</li>
@@ -436,6 +445,46 @@ footer .label a { color: var(--amber); text-decoration: none; }
       </ul>
       <h3>Dla kogo?</h3>
       <p>Zestaw sprawdzi się u specjalistów ds. marketingu cyfrowego, przedsiębiorców, właścicieli firm internetowych i menedżerów mediów społecznościowych. To praktyczna baza gotowych rozwiązań, które możesz dostosować do swojej marki i celów, zamiast tworzyć każdą automatyzację od podstaw.</p>
+    </div>
+  </article>
+
+<article class="product" data-n="15" id="bez-twarzy">
+    <div class="cover"><img src="c/bez-twarzy.jpg" alt="Okładka: 10 000+ estetycznych rolek bez twarzy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="label">15 / BEZ TWARZY</div>
+      <h2>10 000+ rolek bez pokazywania twarzy</h2>
+      <p class="lead">Estetyczne treści na Instagram, TikToka i YouTube Shorts, bez pokazywania twarzy.</p>
+      <p>Pakiet zawiera ponad 10 000 gotowych materiałów wizualnych. Znajdziesz tu rolki, filmy, zdjęcia i edytowalne szablony Canva w różnych stylach, które pomogą Ci przygotowywać atrakcyjne publikacje, zachować spójny wizerunek marki i usprawnić tworzenie treści.</p>
+      <h3>Co zawiera pakiet?</h3>
+      <ul>
+        <li><b>Gotowe rolki i materiały wideo:</b> ponad 10 000 estetycznych materiałów do wykorzystania w mediach społecznościowych, bez konieczności samodzielnego nagrywania.</li>
+        <li><b>Różnorodne style wizualne:</b> materiały w estetyce luxury, aesthetic i innych stylach, które możesz dopasować do charakteru swojej marki.</li>
+        <li><b>Szablony Canva:</b> edytowalne projekty, które pozwalają dostosować treści do własnych potrzeb i identyfikacji wizualnej.</li>
+        <li><b>Materiały do różnych formatów:</b> treści do rolek, krótkich filmów, zdjęć i relacji na Instagramie.</li>
+        <li><b>Natychmiastowy dostęp</b> do plików.</li>
+      </ul>
+      <h3>Dla kogo?</h3>
+      <p>Pakiet sprawdzi się u twórców internetowych, influencerów, trenerów, przedsiębiorców i menedżerów mediów społecznościowych, którzy chcą tworzyć estetyczne treści bez pokazywania twarzy. To również propozycja dla osób sprzedających produkty cyfrowe i rozwijających własną markę w internecie.</p>
+    </div>
+  </article>
+
+<article class="product" data-n="16" id="podroze">
+    <div class="cover"><img src="c/podroze.jpg" alt="Okładka: 900+ estetycznych rolek podróżniczych" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="label">16 / PODRÓŻE</div>
+      <h2>900+ estetycznych rolek podróżniczych</h2>
+      <p class="lead">Marzysz o profilu pełnym pięknych widoków, luksusowych wnętrz i inspirujących miejsc?</p>
+      <p>Ten pakiet zawiera ponad 900 materiałów wideo przedstawiających wyjątkowe destynacje, eleganckie hotele, prywatne wille, malownicze plaże i klimatyczne zakątki świata. Wykorzystaj je, aby tworzyć estetyczne rolki, inspirować odbiorców i nadać swojemu profilowi wyjątkowy charakter.</p>
+      <h3>Co tu znajdziesz?</h3>
+      <ul>
+        <li>Ponad 900 gotowych rolek i ujęć podróżniczych</li>
+        <li>Piękne hotele, luksusowe wille i wyjątkowe miejsca na całym świecie</li>
+        <li>Malownicze krajobrazy, zachwycające widoki i inspirujące kadry</li>
+        <li>Materiały idealne do tworzenia rolek na Instagram, TikToka i YouTube Shorts</li>
+        <li>Gotowe wideo, dzięki którym nie musisz samodzielnie nagrywać ani podróżować, aby tworzyć atrakcyjne treści</li>
+      </ul>
+      <h3>Dla kogo?</h3>
+      <p>Dla twórców, którzy kochają estetyczne profile, tematykę podróży i luksusowy styl życia. Pakiet sprawdzi się zarówno u osób budujących markę osobistą, jak i u twórców profili bez pokazywania twarzy, którzy chcą regularnie publikować piękne i angażujące treści.</p>
     </div>
   </article>
 
@@ -527,13 +576,14 @@ footer .label a { color: var(--amber); text-decoration: none; }
   var products = Array.prototype.slice.call(document.querySelectorAll('.product'));
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) count.textContent = e.target.dataset.n + ' / 14'; });
+      entries.forEach(function (e) { if (e.isIntersecting) count.textContent = e.target.dataset.n + ' / 16'; });
     }, { rootMargin: '-45% 0px -45% 0px' });
     products.forEach(function (p) { io.observe(p); });
     var shelf = document.querySelector('.shelf-card');
-    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) count.textContent = '00 / 14'; }); }, { rootMargin: '-45% 0px -45% 0px' }).observe(shelf);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) count.textContent = '00 / 16'; }); }, { rootMargin: '-45% 0px -45% 0px' }).observe(shelf);
   }
 })();
 </script>
 
-</body></html>
+</body>
+</html>
