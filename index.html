@@ -7,111 +7,151 @@
 <title>Katalog CreateOn Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..700&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..800&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
 <style>
-/* Layout: night gallery. A slow, flowing fabric field (canvas) sits fixed behind
-   the page; every product floats over it as a frosted-glass spread. Fixed corner
-   marks frame the screen: brand top-left, scroll hint and product counter at the bottom.
-   One deliberate dark look, independent of the viewer's theme. */
+/* Layout: the CreateOn night gallery, made into a sales catalog. The moving
+   fabric stays fixed behind. A sticky glass bar carries the brand and the
+   category filter. Hero, then the three 2026 hits as feature cards, then the
+   shelf of all covers, then one glass spread per product. Each product has
+   its own accent colour (from its cover), used for glow, ticks and the
+   "Dlaczego teraz?" note, so the page reads as one system with 18 voices.
+   One deliberate dark look. */
 :root {
   color-scheme: dark;
   --night: #000002;
-  --ink: #F0F0EB;
-  --soft: rgba(240, 240, 235, .72);
-  --faint: rgba(240, 240, 235, .5);
-  --glass: rgba(18, 20, 28, .7);
-  --glass-2: rgba(24, 24, 28, .45);
-  --edge: rgba(255, 255, 255, .2);
+  --ink: #F3F1EC;
+  --soft: rgba(243, 241, 236, .76);
+  --faint: rgba(243, 241, 236, .5);
+  --glass: rgba(16, 18, 27, .74);
+  --glass-2: rgba(28, 30, 40, .55);
+  --edge: rgba(255, 255, 255, .18);
+  --edge-soft: rgba(255, 255, 255, .08);
   --amber: #E8A55C;
   --navy: #2A3F9E;
+  --acc: #E8A55C;
   --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --script: "Fraunces", Georgia, serif;
 }
 * { box-sizing: border-box; }
 img { max-width: 100%; }
 body { margin: 0; }
-html { background: var(--night); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+html { background: var(--night); scroll-padding-top: 96px; }
 body {
-  background: var(--night); color: var(--ink);
-  font-family: var(--sans); font-size: 16px; line-height: 1.65; font-weight: 400;
+  margin: 0; background: var(--night); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.65;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 120px;
+  padding-block: 0 110px;
 }
 a { color: inherit; }
-a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
-
+a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 8px; }
 #field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
-.veil { position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 35%, rgba(0,0,2,.0) 0%, rgba(0,0,2,.55) 75%); }
+.veil { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 35%, rgba(0,0,2,0) 0%, rgba(0,0,2,.55) 75%); }
+.wrap { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.glass { background: var(--glass); border: 1px solid var(--edge); border-radius: 26px; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.label { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; }
 
-/* Fixed frame marks */
-.mark { position: fixed; z-index: 3; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); }
-.brand { top: calc(env(safe-area-inset-top, 0px) + 22px); left: max(24px, calc(env(safe-area-inset-left, 0px) + 16px)); display: flex; gap: 12px; align-items: center; text-decoration: none; }
-.brand svg { width: 26px; height: 14px; }
-.brand b { display: block; font-size: 13px; letter-spacing: .16em; font-weight: 700; }
-.brand span { color: var(--faint); }
-.hint { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); left: max(24px, calc(env(safe-area-inset-left, 0px) + 16px)); color: var(--soft); }
-.count { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); right: max(24px, calc(env(safe-area-inset-right, 0px) + 16px)); color: var(--soft); font-variant-numeric: tabular-nums; }
-.progress { position: fixed; z-index: 3; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255,255,255,.08); }
-.progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--navy), var(--amber)); }
-
-.wrap { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; padding-top: 140px; }
-
-.glass { background: var(--glass); border: 1px solid var(--edge); border-radius: 24px;
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
-.label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; }
+/* Sticky bar */
+.bar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 10px); z-index: 4; margin-top: 12px; padding: 10px 12px 10px 18px; display: flex; gap: 16px; align-items: center;
+  background: rgba(10, 12, 20, .8); border: 1px solid var(--edge); border-radius: 20px; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.wordmark { flex: none; font-family: var(--script); font-style: italic; font-size: 22px; line-height: 1; text-decoration: none; }
+.wordmark i { color: var(--amber); }
+.wordmark small { display: block; font-family: var(--sans); font-style: normal; font-size: 8px; letter-spacing: .5em; color: var(--faint); margin-top: 4px; }
+.chips { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); mask-image: linear-gradient(90deg, #000 90%, transparent); }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; font: 500 14px var(--sans); color: var(--soft); background: rgba(255,255,255,.05); border: 1px solid var(--edge-soft); border-radius: 999px; padding: 7px 14px; cursor: pointer; white-space: nowrap; display: inline-flex; gap: 7px; align-items: center; }
+.chip em { font-style: normal; font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.chip:hover { color: var(--ink); border-color: var(--edge); }
+.chip.active { background: var(--amber); color: #17110A; border-color: var(--amber); }
+.chip.active em { color: inherit; opacity: .7; }
+@media (max-width: 640px) { .bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; } .wordmark { padding-left: 4px; } .chips { -webkit-mask-image: none; mask-image: none; } }
 
 /* Hero */
-.hero { padding: clamp(28px, 5vw, 56px); display: grid; gap: 18px; max-width: 920px; margin-top: 8vh; }
-.hero h1 { margin: 0; font-weight: 400; font-size: clamp(42px, 6.4vw, 80px); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
-.hero h1 em { font-family: var(--script); font-style: italic; font-weight: 400; letter-spacing: -.02em; color: var(--amber); }
-.hero p { margin: 0; color: var(--soft); max-width: 52ch; }
-.wordmark { font-family: var(--script); font-size: 28px; letter-spacing: -.01em; line-height: 1; }
-.wordmark i { color: var(--amber); }
-.wordmark small { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: .5em; color: var(--faint); margin-top: 6px; }
+.hero { padding: clamp(28px, 6vw, 64px); display: grid; gap: 20px; margin-top: 10vh; }
+.hero h1 { margin: 0; font-weight: 400; font-size: clamp(44px, 7vw, 92px); line-height: .96; letter-spacing: -.055em; text-wrap: balance; max-width: 14ch; }
+.hero h1 em { font-family: var(--script); font-style: italic; letter-spacing: -.02em; color: var(--amber); }
+.hero p { margin: 0; color: var(--soft); max-width: 58ch; font-size: 18px; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; }
+.stats span { border: 1px solid var(--edge); border-radius: 999px; padding: 7px 16px; font-size: 14px; color: var(--soft); background: rgba(0,0,0,.2); }
+.stats b { color: var(--ink); font-weight: 700; }
+.cta { justify-self: start; display: inline-flex; gap: 10px; align-items: center; text-decoration: none; background: var(--amber); color: #17110A; font-weight: 700; padding: 14px 28px; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease; }
+.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(232,165,92,.35); }
+
+/* Hits */
+.hits-card { padding: clamp(20px, 4vw, 32px); display: grid; gap: 18px; margin-top: 14vh; }
+.hits-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.hits-head h2 { margin: 0; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -.045em; line-height: 1.05; }
+.hits-head h2 em { font-family: var(--script); color: var(--amber); }
+.hits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .hits { grid-template-columns: minmax(0, 1fr); } }
+.hit { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: center; text-decoration: none; padding: 14px; border-radius: 20px; background: var(--glass-2); border: 1px solid var(--edge-soft); transition: border-color .2s ease, transform .2s ease; }
+@media (min-width: 901px) { .hit { grid-template-columns: minmax(0, 1fr); align-items: start; } .hit img { max-width: 220px; justify-self: center; } }
+.hit:hover { border-color: var(--acc); transform: translateY(-3px); }
+.hit img { width: 100%; border-radius: 14px; background: #fff; display: block; box-shadow: 0 18px 40px -20px var(--acc); }
+.hit div { display: grid; gap: 6px; }
+.hit h3 { margin: 0; font-size: 19px; line-height: 1.2; letter-spacing: -.02em; }
+.hit p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.45; }
+.hit b { font-size: 13px; color: var(--acc); }
+.hot { justify-self: start; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; color: #120C08; background: var(--acc); border-radius: 999px; padding: 4px 10px; }
 
 /* Shelf */
-.shelf-card { padding: 24px; display: grid; gap: 16px; margin-top: 30vh; }
+.shelf-card { padding: 24px; display: grid; gap: 16px; margin-top: 10vh; }
 .shelf-head { display: flex; justify-content: space-between; gap: 12px; }
-.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; }
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 900px) { .shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .shelf-card { padding: 16px; } }
-.shelf a { display: grid; gap: 8px; text-decoration: none; }
+.shelf a { display: grid; gap: 8px; text-decoration: none; position: relative; }
 .shelf img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #fff; border-radius: 12px; transition: transform .3s ease, box-shadow .3s ease; }
-.shelf a:hover img { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(232,165,92,.25); }
+.shelf a:hover img { transform: translateY(-4px); box-shadow: 0 12px 30px -8px var(--acc); }
+.shelf em { position: absolute; top: 6px; left: 6px; font-style: normal; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: #120C08; background: var(--acc); border-radius: 999px; padding: 3px 8px; }
 .shelf span { font-size: 12px; line-height: 1.3; color: var(--soft); }
 
 /* Product spreads */
-.product { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; padding: clamp(20px, 4vw, 44px); scroll-margin-top: 90px; margin-top: 22vh;
-  background: var(--glass); border: 1px solid var(--edge); border-radius: 24px; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
-@media (max-width: 760px) { .product { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 14vh; } }
-.cover { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 90px); display: grid; gap: 14px; }
-@media (max-width: 760px) { .cover { position: static; max-width: 340px; } }
-.cover img { width: 100%; border-radius: 16px; background: #fff; display: block; }
+.product { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 44px; padding: clamp(20px, 4vw, 48px); margin-top: 18vh; position: relative;
+  background: var(--glass); border: 1px solid var(--edge); border-radius: 26px; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.product::before { content: ""; position: absolute; left: 40px; right: 40px; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--acc), transparent); }
+@media (max-width: 760px) { .product { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 12vh; } }
+.cover { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 100px); display: grid; gap: 14px; }
+@media (max-width: 760px) { .cover { position: static; max-width: 320px; } }
+.cover img { width: 100%; border-radius: 18px; background: #fff; display: block; box-shadow: 0 34px 70px -34px var(--acc); }
 .avail { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
-.avail b { color: var(--amber); font-weight: 600; }
-
+.avail b { color: var(--acc); font-weight: 700; }
 .copy { min-width: 0; display: grid; gap: 16px; align-content: start; }
-.copy h2 { font-weight: 400; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.04; letter-spacing: -.045em; margin: 0; text-wrap: balance; }
-.copy .lead { color: var(--ink); font-size: 18px; font-weight: 500; margin: 0; max-width: 56ch; }
+.meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.copy h2 { font-weight: 400; font-size: clamp(32px, 4vw, 50px); line-height: 1.02; letter-spacing: -.045em; margin: 0; text-wrap: balance; }
+.copy .lead { margin: 0; font-family: var(--script); font-style: italic; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: var(--acc); max-width: 34ch; }
 .copy p { margin: 0; max-width: 64ch; color: var(--soft); }
-.copy h3 { font-weight: 500; font-size: 20px; letter-spacing: -.02em; margin: 14px 0 0; text-wrap: balance; }
-.copy ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 64ch; }
-.copy li { padding: 10px 14px 10px 36px; position: relative; background: var(--glass-2); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; color: var(--soft); }
-.copy li::before { content: ""; position: absolute; left: 15px; top: 1.15em; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--amber)); }
-.copy li b { color: var(--ink); font-weight: 600; }
-.tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tags span { border: 1px solid var(--edge); border-radius: 999px; padding: 4px 12px; font-size: 14px; color: var(--soft); }
-.badge { justify-self: start; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); }
+.copy h3 { margin: 10px 0 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+.formats { display: flex; flex-wrap: wrap; gap: 8px; }
+.formats span { border: 1px solid var(--edge); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--soft); }
+.get { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 1000px) { .get { grid-template-columns: minmax(0, 1fr); } }
+.get li { padding: 10px 14px 10px 38px; position: relative; background: var(--glass-2); border: 1px solid var(--edge-soft); border-radius: 14px; color: var(--soft); font-size: 15px; line-height: 1.45; }
+.get li::before { content: "✓"; position: absolute; left: 14px; top: 10px; color: var(--acc); font-weight: 800; }
+.wins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 1000px) { .wins { grid-template-columns: minmax(0, 1fr); } }
+.wins div { padding: 14px 16px; border-radius: 16px; background: rgba(0,0,0,.25); border: 1px solid var(--edge-soft); border-top: 2px solid var(--acc); display: grid; gap: 4px; }
+.wins b { font-size: 15.5px; line-height: 1.3; }
+.wins span { font-size: 14px; color: var(--soft); line-height: 1.45; }
+.copy .who b { color: var(--ink); }
+.why { padding: 14px 18px; border-radius: 0 16px 16px 0; border-left: 3px solid var(--acc); background: color-mix(in srgb, var(--acc) 12%, transparent); color: var(--soft); max-width: 64ch; }
+.why b { color: var(--ink); display: block; margin-bottom: 2px; }
 
-footer { margin-top: 26vh; padding: 36px; text-align: center; display: grid; gap: 10px; justify-items: center; }
-footer .big { font-size: clamp(30px, 5vw, 52px); letter-spacing: -.05em; line-height: 1.05; }
-footer .big em { font-family: var(--script); font-style: italic; color: var(--amber); letter-spacing: -.02em; }
+/* Corner marks */
+.mark { position: fixed; z-index: 3; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--soft); }
+.count { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); right: max(24px, calc(env(safe-area-inset-right, 0px) + 16px)); font-variant-numeric: tabular-nums; }
+.progress { position: fixed; z-index: 3; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255,255,255,.08); }
+.progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--navy), var(--amber)); }
+
+@media (max-width: 600px) { .count { display: none; } }
+footer { margin-top: 22vh; padding: 40px 28px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+footer .big { font-size: clamp(32px, 5vw, 56px); letter-spacing: -.05em; line-height: 1.05; }
+footer .big em { font-family: var(--script); color: var(--amber); letter-spacing: -.02em; }
 footer .label a { color: var(--amber); text-decoration: none; }
-
-@media (max-width: 600px) { .hint { display: none; } .wrap { padding-top: 96px; } .hero { margin-top: 6vh; } }
-@media (prefers-reduced-motion: reduce) { .shelf img { transition: none; } .shelf a:hover img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .shelf img, .hit, .cta { transition: none; } .shelf a:hover img, .hit:hover, .cta:hover { transform: none; } }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 </head>
 <body>
@@ -119,378 +159,325 @@ footer .label a { color: var(--amber); text-decoration: none; }
 
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="veil"></div>
-
-<a class="mark brand" href="#top" aria-label="Na górę strony">
-  <svg viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 9c3-7 6-7 8 0s5 7 8 0 6-7 8 0"/></svg>
-  <div><b>CreateOn</b><span>Studio / Katalog</span></div>
-</a>
-<div class="mark hint">Przewiń, aby odkryć produkty</div>
-<div class="mark count" id="count">00 / 16</div>
+<div class="mark count" id="count">00 / 18</div>
 <div class="progress" aria-hidden="true"><i id="bar"></i></div>
 
 <div class="wrap" id="top">
+  <nav class="bar" aria-label="Kategorie">
+    <a class="wordmark" href="#top" aria-label="CreateOn Studio, na górę">create<i>on</i><small>STUDIO</small></a>
+    <div class="chips" id="chips"><button type="button" class="chip active" data-c="all" aria-pressed="true">Wszystkie <em>18</em></button><button type="button" class="chip" data-c="ai" aria-pressed="false">AI i automatyzacje <em>7</em></button><button type="button" class="chip" data-c="tresci" aria-pressed="false">Hooki i copy <em>2</em></button><button type="button" class="chip" data-c="wideo" aria-pressed="false">Rolki i wideo <em>4</em></button><button type="button" class="chip" data-c="canva" aria-pressed="false">Szablony Canva <em>3</em></button><button type="button" class="chip" data-c="plan" aria-pressed="false">Planowanie i e-mail <em>2</em></button></div>
+  </nav>
+
   <header class="hero glass">
-    <div class="wordmark">create<i>on</i><small>STUDIO</small></div>
-    <div class="label">Szablony · Prompty · Przewodniki</div>
+    <div class="label">Katalog 2026 · Szablony · Webbooki · AI</div>
     <h1>Mniej wymyślania. <em>Więcej tworzenia.</em></h1>
-    <p>Gotowe szablony, bazy pomysłów i przewodniki dla twórców, marek osobistych i małych firm. Wybierz produkt, aby zobaczyć, co zawiera.</p>
+    <p>18 gotowych produktów dla twórców, marek osobistych i małych firm. Montaż rolek z AI, automatyzacje DM, prompty, hooki, szablony Canva i tysiące rolek gotowych do publikacji. Wybierasz, otwierasz i działasz jeszcze dziś.</p>
+    <div class="stats"><span><b>18</b> produktów</span><span><b>9</b> interaktywnych webbooków</span><span><b>13 000+</b> rolek i szablonów</span><span><b>12 000+</b> promptów</span></div>
+    <a class="cta" href="#hity">Zobacz hity 2026 <span aria-hidden="true">→</span></a>
   </header>
 
-  <section class="shelf-card glass" aria-label="Wszystkie produkty">
-    <div class="shelf-head label"><span>Wszystkie produkty</span><span>16</span></div>
-    <ol class="shelf">
-    <li><a href="#mockupy"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów Mockup</span></a></li>
-    <li><a href="#hooki"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ hooków</span></a></li>
-    <li><a href="#naklejki"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ naklejek</span></a></li>
-    <li><a href="#identyfikacja"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>Brand board</span></a></li>
-    <li><a href="#cta"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 CTA</span></a></li>
-    <li><a href="#macierzynstwo"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>920+ rolek o macierzyństwie</span></a></li>
-    <li><a href="#wellness"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek wellness</span></a></li>
-    <li><a href="#pomysly"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt</span></a></li>
-    <li><a href="#prompty"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów</span></a></li>
-    <li><a href="#planer"><img src="c/planer.jpg" alt="" loading="lazy"><span>Content planer</span></a></li>
-    <li><a href="#newslettery"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 newsletterów</span></a></li>
-    <li><a href="#shortcody"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>350 shortcodów</span></a></li>
-    <li><a href="#rolki-claude"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><span>Montuj rolki z Claude</span></a></li>
-    <li><a href="#manychat"><img src="c/manychat.jpg" alt="" loading="lazy"><span>30 automatyzacji ManyChat</span></a></li>
-    <li><a href="#bez-twarzy"><img src="c/bez-twarzy.jpg" alt="" loading="lazy"><span>10 000+ rolek bez twarzy</span></a></li>
-    <li><a href="#podroze"><img src="c/podroze.jpg" alt="" loading="lazy"><span>900+ rolek podróżniczych</span></a></li>
-  </ol>
+  <section class="hits-card glass" id="hity" aria-label="Hity 2026">
+    <div class="hits-head"><h2>Hity <em>2026</em></h2><span class="label">AI · wideo · automatyzacje</span></div>
+    <div class="hits"><a class="hit" href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="Okładka: Montuj rolki z Claude" loading="lazy"><div><span class="hot">Hit 2026</span><h3>Montuj rolki z Claude</h3><p>Wgrywasz surowe nagranie. Claude oddaje gotową rolkę.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#tworz-claude" style="--acc:#F2683C"><img src="c/tworz-claude.jpg" alt="Okładka: Twórz zdjęcia i wideo z Claude" loading="lazy"><div><span class="hot">Nowość</span><h3>Twórz zdjęcia i wideo z Claude</h3><p>Twoje własne studio AI: zdjęcia, wideo i lektor w jednym oknie.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#manychat" style="--acc:#EC3E86"><img src="c/manychat.jpg" alt="Okładka: 26 szablonów automatyzacji ManyChat" loading="lazy"><div><span class="hot">Sprzedaż w DM</span><h3>26 szablonów automatyzacji ManyChat</h3><p>Twoje DM sprzedają, kiedy Ty śpisz.</p><b>Zobacz produkt →</b></div></a></div>
   </section>
 
-  <article class="product" data-n="01" id="mockupy">
-    <div class="cover"><img src="c/mockupy.jpg" alt="Okładka: 1000 szablonów mockupów"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">01 / MOCKUPY</div>
-      <h2>1000 szablonów Mockup do promocji i sprzedaży produktów</h2>
-      <p class="lead">Gotowe rozwiązanie, które pozwala szybko przygotować profesjonalne oferty i zacząć sprzedawać bez żmudnego projektowania każdego elementu od zera.</p>
-      <p>Otrzymujesz ponad 1000 estetycznych, profesjonalnych makiet, które możesz łatwo edytować w Canvie i dopasować do charakteru swoich produktów oraz marki. Zamiast zaczynać od pustego projektu, wybierasz gotowy szablon, dodajesz swoje treści i grafiki, i Twoja oferta jest gotowa do publikacji.</p>
-      <h3>Co otrzymujesz?</h3>
-      <ul>
-        <li>Ponad 1000 makiet ofert w różnych rozmiarach i formatach</li>
-        <li>Ponad 100 makiet ofert wideo do dynamicznych prezentacji produktów</li>
-        <li>Ponad 300 makiet planerów i zaproszeń</li>
-        <li>Ponad 20 szablonów scen sprzedaży produktów</li>
-        <li>50 makiet banerów sklepowych</li>
-        <li>70 stron z podziękowaniami i szablonami instrukcji do pobrania</li>
-      </ul>
-      <p>Każdy materiał możesz edytować w Canvie, również w bezpłatnej wersji. Dopasuj kolory, czcionki i elementy do stylu swojej marki i stwórz projekty po swojemu.</p>
-    </div>
-  </article>
+  <section class="shelf-card glass" aria-label="Wszystkie produkty">
+    <div class="shelf-head label"><span id="shelfLabel">Wszystkie produkty</span><span id="shelfN">18</span></div>
+    <ol class="shelf" id="shelf"><li data-cat="ai"><a href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><em>Hit 2026</em><span>Montuj rolki z Claude</span></a></li><li data-cat="ai"><a href="#tworz-claude" style="--acc:#F2683C"><img src="c/tworz-claude.jpg" alt="" loading="lazy"><em>Nowość</em><span>Twórz zdjęcia i wideo z Claude</span></a></li><li data-cat="ai"><a href="#manychat" style="--acc:#EC3E86"><img src="c/manychat.jpg" alt="" loading="lazy"><em>Sprzedaż w DM</em><span>26 szablonów automatyzacji ManyChat</span></a></li><li data-cat="ai"><a href="#shortcody" style="--acc:#3D6BF0"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>250+ shortcodów do ChatGPT</span></a></li><li data-cat="ai"><a href="#prompty550" style="--acc:#F59A4F"><img src="c/prompty550.jpg" alt="" loading="lazy"><span>550 promptów ChatGPT dla twórców cyfrowych</span></a></li><li data-cat="ai"><a href="#prompty" style="--acc:#5B86FF"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów ChatGPT dla biznesu</span></a></li><li data-cat="tresci"><a href="#hooki" style="--acc:#E8307F"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ najlepszych hooków na Instagram i TikTok</span></a></li><li data-cat="tresci"><a href="#cta" style="--acc:#1FA67A"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 wezwań do działania (CTA), które sprzedają</span></a></li><li data-cat="ai"><a href="#pomysly" style="--acc:#2FA08A"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt cyfrowy</span></a></li><li data-cat="wideo"><a href="#bez-twarzy" style="--acc:#C9783F"><img src="c/bez-twarzy.jpg" alt="" loading="lazy"><span>10 000+ estetycznych rolek bez pokazywania twarzy</span></a></li><li data-cat="canva"><a href="#mockupy" style="--acc:#E8467C"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów mockupów do promocji i sprzedaży</span></a></li><li data-cat="plan"><a href="#planer" style="--acc:#C83FD6"><img src="c/planer.jpg" alt="" loading="lazy"><span>Planer contentu do social mediów</span></a></li><li data-cat="plan"><a href="#newslettery" style="--acc:#E07A3F"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</span></a></li><li data-cat="wideo"><a href="#podroze" style="--acc:#1E9FD6"><img src="c/podroze.jpg" alt="" loading="lazy"><span>900+ estetycznych rolek podróżniczych</span></a></li><li data-cat="wideo"><a href="#wellness" style="--acc:#B88A4A"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek: zdrowy styl życia, afirmacje i równowaga</span></a></li><li data-cat="wideo"><a href="#macierzynstwo" style="--acc:#C266C9"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>920+ rolek o macierzyństwie</span></a></li><li data-cat="canva"><a href="#identyfikacja" style="--acc:#2B8F5A"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>40 szablonów identyfikacji wizualnej marki</span></a></li><li data-cat="canva"><a href="#naklejki" style="--acc:#D98A8A"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ estetycznych naklejek na relacje i karuzele</span></a></li></ol>
+  </section>
 
-<article class="product" data-n="02" id="hooki">
-    <div class="cover"><img src="c/hooki.jpg" alt="Okładka: 450+ najlepszych hooków na Instagram i TikTok" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">02 / HOOKI</div>
-      <h2>450+ najlepszych hooków na Instagram i TikTok</h2>
-      <p class="lead">Masz tylko 3 sekundy, aby zatrzymać uwagę odbiorcy.</p>
-      <p>Ta zoptymalizowana baza ponad 450 przetestowanych zdań otwierających i hooków daje Ci natychmiastową przewagę na Instagramie i TikToku.</p>
-      <h3>Co znajdziesz w środku?</h3>
-      <ul>
-        <li><b>Ponad 450 zoptymalizowanych hooków tekstowych</b> podzielonych na czytelne kategorie, m.in. budowanie ciekawości, obalanie mitów, kontrowersje, porady i storytelling, aby uzyskać najwyższą konwersję i zaangażowanie.</li>
-      </ul>
-      <h3>Dlaczego ten pakiet to Twój nowy game-changer?</h3>
-      <ul>
-        <li><b>Przyciągasz uwagę w pierwsze 3 sekundy:</b> skuteczne zdania otwierające, które błyskawicznie przerywają przewijanie (scroll-stopper).</li>
-        <li><b>Maksymalizujesz czas oglądania:</b> hooki skonstruowane tak, aby budować ciekawość i skłaniać do obejrzenia rolki do końca i przeczytania opisu.</li>
-        <li><b>Zero paraliżu decyzyjnego:</b> otwierasz bazę, wybierasz pasujący hook, nakładasz swój estetyczny B-roll i publikujesz w 2 minuty.</li>
-      </ul>
-      <h3>Dla kogo jest ta baza?</h3>
-      <p>Dla wszystkich twórców cyfrowych, marek osobistych, sprzedawców własnych produktów i ekspertów, którzy chcą budować zasięgi i sprzedawać w social mediach bez stresu, bez konieczności nagrywania siebie i bez straty czasu.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="03" id="naklejki">
-    <div class="cover"><img src="c/naklejki.jpg" alt="Okładka: 500+ estetycznych naklejek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">03 / NAKLEJKI</div>
-      <h2>500+ estetycznych naklejek karuzelowych</h2>
-      <p class="lead">Sezonowe i estetyczne naklejki na relacje i karuzele.</p>
-      <p>Zestaw ponad 500 estetycznych naklejek graficznych to niezbędne narzędzie dla każdego influencera, twórcy i marki osobistej, której zależy na spójnym i przyciągającym wzrok wyglądzie profilu.</p>
-      <p>Koniec z szukaniem pojedynczych elementów w wyszukiwarkach. Teraz masz całą cyfrową bibliotekę gotowych detali pod ręką, w jednym miejscu.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="04" id="identyfikacja">
-    <div class="cover"><img src="c/identyfikacja.jpg" alt="Okładka: Brand board szablony" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">04 / BRANDING</div>
-      <h2>40 szablonów identyfikacji wizualnej marki w Canva</h2>
-      <p class="lead">Zadbaj o profesjonalny i spójny wizerunek swojej marki dzięki kolekcji edytowalnych szablonów.</p>
-      <p>To praktyczne narzędzie dla właścicieli małych firm, twórców internetowych, projektantów, trenerów oraz osób sprzedających produkty cyfrowe.</p>
-      <h3>Co zawiera pakiet?</h3>
-      <ul>
-        <li>40 edytowalnych szablonów</li>
-        <li>Miejsce na logo, kolory marki i wybrane czcionki</li>
-        <li>Pełną możliwość personalizacji w Canvie</li>
-        <li>Natychmiastowy dostęp do plików cyfrowych</li>
-      </ul>
-      <p>Te szablony pomogą Ci uporządkować najważniejsze elementy identyfikacji wizualnej i stworzyć spójny wygląd marki, zarówno w materiałach biznesowych, jak i w mediach społecznościowych.</p>
-      <h3>Edytuj w Canvie</h3>
-      <p>Dopasuj każdy szablon do swojej marki. Z łatwością zmienisz:</p>
-      <div class="tags"><span>zdjęcia</span><span>kolory</span><span>czcionki</span><span>teksty</span><span>tła</span><span>elementy układu</span></div>
-      <p>Nie potrzebujesz żadnych zaawansowanych umiejętności graficznych. Wystarczy bezpłatne konto w Canvie.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="05" id="cta">
-    <div class="cover"><img src="c/cta.jpg" alt="Okładka: 101 wezwań do działania" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">05 / CTA</div>
-      <h2>101 wezwań do działania (CTA), które pomogą Ci sprzedawać</h2>
-      <p class="lead">Wybierasz, kopiujesz i wklejasz do swojej treści.</p>
-      <p>Zestaw 101 gotowych wezwań do działania w formie webbooka pomoże Ci tworzyć treści, które nie tylko przyciągają uwagę, ale przede wszystkim skłaniają odbiorców do wykonania konkretnego kroku.</p>
-      <ul>
-        <li><b>Zwiększaj konwersje.</b> Jasne i konkretne CTA mówią odbiorcom dokładnie, co mają zrobić: kliknąć, kupić, zapisać się, pobrać materiał czy skontaktować się z Tobą. Im prostszy komunikat, tym łatwiej podjąć decyzję.</li>
-        <li><b>Kieruj ruch tam, gdzie go potrzebujesz.</b> Wykorzystuj CTA, aby przekierowywać odbiorców na swoją stronę internetową, sklep, blog, konkretną ofertę czy stronę produktu.</li>
-        <li><b>Zwiększaj sprzedaż.</b> Skuteczne CTA zachęcają odbiorców do zakupu, zapisania się na listę mailingową, skorzystania z oferty lub wykonania kolejnego kroku na ścieżce zakupowej.</li>
-        <li><b>Buduj relacje z odbiorcami.</b> CTA to nie tylko sprzedaż. Możesz wykorzystać je do zachęcania do zadawania pytań, komentowania, dzielenia się opinią, obserwowania profilu czy kontaktu z Tobą.</li>
-        <li><b>Ułatwiaj podejmowanie decyzji.</b> Zbyt wiele możliwości może paraliżować klienta. Dobre CTA wskazuje konkretny następny krok, zmniejsza chaos i ułatwia przejście od zainteresowania do działania.</li>
-      </ul>
-    </div>
-  </article>
-
-<article class="product" data-n="06" id="macierzynstwo">
-    <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 920+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">06 / ROLKI</div>
-      <h2>920+ rolek o macierzyństwie</h2>
-      <p class="lead">Twórz atrakcyjne rolki o macierzyństwie bez konieczności projektowania każdego filmu od podstaw.</p>
-      <p>Dzięki gotowym szablonom szybko przygotujesz treści do mediów społecznościowych, podzielisz się doświadczeniami związanymi z rodzicielstwem, pokażesz codzienne życie rodzinne lub wypromujesz swoją markę. Pakiet zawiera ponad 920 szablonów filmów o mamach i macierzyństwie. To praktyczne rozwiązanie dla zapracowanych mam, przedsiębiorców i influencerów, którzy chcą regularnie publikować estetyczne, dopracowane materiały.</p>
-      <h3>Co otrzymujesz?</h3>
-      <ul>
-        <li>Ponad 90 filmów o macierzyństwie z gotowymi hookami, które możesz edytować w Canvie</li>
-        <li>Ponad 800 szablonów filmów o mamach i macierzyństwie, gotowych do dostosowania i pobrania</li>
-        <li>Ponad 300 filmów poświęconych tematyce ciąży</li>
-        <li>Ponad 200 filmów dotyczących dzieci i niemowląt</li>
-      </ul>
-      <h3>Dlaczego warto?</h3>
-      <ul>
-        <li><b>Oszczędność czasu:</b> korzystaj z gotowych układów i sprawniej przygotowuj materiały do publikacji.</li>
-        <li><b>Większe zaangażowanie:</b> przyciągaj uwagę odbiorców dzięki estetycznym filmom i pomysłom na angażujące początki nagrań.</li>
-        <li><b>Wszechstronne zastosowanie:</b> twórz treści o macierzyństwie, ciąży, dzieciach i codziennym życiu rodzinnym, a także materiały wspierające promocję własnej marki.</li>
-      </ul>
-    </div>
-  </article>
-
-<article class="product" data-n="07" id="wellness">
-    <div class="cover"><img src="c/wellness.jpg" alt="Okładka: 850+ gotowych rolek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">07 / WELLNESS</div>
-      <h2>850+ gotowych rolek: zdrowy styl życia, afirmacje i równowaga</h2>
-      <p class="lead">Afirmacje, spokojne kadry, uważność i codzienne dbanie o siebie.</p>
-      <p>Ten zestaw łączy ponad 850 materiałów, które możesz wykorzystać w komunikacji swojej marki wellness. Znajdziesz tu zarówno krótkie, bezosobowe rolki, jak i filmy o zdrowiu oraz gotowe projekty na Instagram. Dzięki temu łatwiej dopasujesz publikacje do tematyki swojego profilu i osób, do których chcesz dotrzeć.</p>
-      <h3>Zawartość zestawu</h3>
-      <ul>
-        <li>250 bezosobowych rolek na Instagram o duchowości i holistycznym stylu życia</li>
-        <li>200 filmów o zdrowiu z gotowymi napisami</li>
-        <li>Ponad 100 szablonów filmów z afirmacjami i ćwiczeniami uważności</li>
-        <li>50 szablonów rolek na Instagram</li>
-        <li>50 szablonów relacji na Instagram</li>
-        <li>50 szablonów filmów na Instagram o tematyce wellness</li>
-      </ul>
-      <h3>Dopasuj materiały do swojego stylu</h3>
-      <p>Niezależnie od tego, czy prowadzisz profil poświęcony duchowości, pracujesz jako instruktor uważności, czy tworzysz treści o holistycznym podejściu do życia, możesz wykorzystać gotowe projekty na własny sposób. Wszystkie szablony są edytowalne w Canvie, także w bezpłatnej wersji. Wystarczy zmienić kolory, czcionki i elementy graficzne, aby dopasować je do swojej identyfikacji wizualnej.</p>
-      <p>Zamiast za każdym razem szukać pomysłów na nowe publikacje, masz pod ręką różnorodne materiały, po które możesz sięgnąć, gdy planujesz kolejne treści.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="08" id="pomysly">
-    <div class="cover"><img src="c/pomysly.jpg" alt="Okładka: 500 pomysłów na produkt cyfrowy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">08 / POMYSŁY</div>
-      <h2>Pomysły na produkty cyfrowe i treści sprzedażowe</h2>
-      <p class="lead">Masz pomysł na rozwój swojego profilu, ale brakuje Ci konkretnego planu?</p>
-      <p>Ten zestaw pomoże Ci uporządkować działania na Instagramie i znaleźć inspiracje do stworzenia własnych produktów cyfrowych. W środku czeka praktyczny poradnik o relacjach (Stories), który pokazuje, jak planować publikacje, przyciągać uwagę odbiorców, wykorzystywać CTA, budować spójny branding i prezentować swoją ofertę. Do tego otrzymujesz ponad 500 pomysłów na produkty cyfrowe, które możesz opracować i wprowadzić do sprzedaży.</p>
-      <h3>Od czego zacząć?</h3>
-      <ul>
-        <li><b>Lepsze Stories:</b> poznaj strategie tworzenia angażujących relacji i wykorzystuj je do komunikacji z odbiorcami.</li>
-        <li><b>Skuteczniejsza prezentacja oferty:</b> dowiedz się, jak łączyć treści, branding i wezwania do działania.</li>
-        <li><b>Pomysł na własny produkt:</b> przejrzyj ponad 500 inspiracji.</li>
-      </ul>
-      <h3>Jakie tematy obejmuje baza pomysłów?</h3>
-      <p>Od zdrowia i rozwoju osobistego po biznes i technologię:</p>
-      <div class="tags"><span>Fitness i zdrowie</span><span>Finanse osobiste</span><span>Marketing cyfrowy</span><span>Rodzicielstwo</span><span>Rozwój osobisty</span><span>Podróże</span><span>Gotowanie i jedzenie</span><span>Technologia i gadżety</span><span>Ogród i dom</span><span>Moda i uroda</span><span>Biznes</span><span>i wiele innych</span></div>
-      <p>Zestaw sprawdzi się zarówno wtedy, gdy dopiero planujesz swoją pierwszą ofertę cyfrową, jak i wtedy, gdy szukasz nowych pomysłów na rozwój istniejącej działalności.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="09" id="prompty">
-    <div class="cover"><img src="c/prompty.jpg" alt="Okładka: 10000+ promptów ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">09 / PROMPTY</div>
-      <h2>10 000+ promptów ChatGPT w 100+ kategoriach</h2>
-      <p class="lead">Marketing, sprzedaż, obsługa klienta, biznes i produktywność.</p>
-      <p>Niezależnie od tego, czy rozwijasz własny biznes, planujesz kampanię marketingową, zarządzasz zespołem czy szukasz sposobów na lepszą organizację pracy, znajdziesz tu gotowe polecenia dopasowane do różnych zadań. Wystarczy wybrać odpowiedni prompt, dostosować go do swoich potrzeb i wykorzystać w praktyce.</p>
-      <h3>Różne obszary, mnóstwo możliwości</h3>
-      <p>Baza obejmuje ponad 10 000 promptów z kategorii takich jak:</p>
-      <div class="tags"><span>Biznes i rozwój firmy</span><span>Obsługa klienta</span><span>HR i zarządzanie zespołem</span><span>Marketing i strategia</span><span>Produktywność</span><span>Sprzedaż</span><span>Startupy</span></div>
-      <p>Gotowe polecenia pomogą Ci szukać nowych pomysłów, przygotowywać plany działania, usprawniać komunikację z klientami i sprawniej realizować codzienne zadania. Zamiast za każdym razem zastanawiać się, jak sformułować polecenie, korzystasz z gotowej bazy i dopasowujesz ją do konkretnego celu.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="10" id="planer">
-    <div class="cover"><img src="c/planer.jpg" alt="Okładka: Content planer" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">10 / PLANER</div>
-      <h2>Planer contentu do social mediów</h2>
-      <p class="lead">Zaplanuj cały miesiąc publikacji w jednym miejscu.</p>
-      <p>Pomysły na posty, terminy publikacji, podpisy, hashtagi i statusy realizacji: łatwo stracić nad tym kontrolę, gdy prowadzisz kilka kanałów jednocześnie. Ten edytowalny kalendarz treści na 30 dni pomoże Ci uporządkować pracę i przejść od pierwszego pomysłu do gotowej publikacji.</p>
-      <h3>Co ułatwi Ci ten planer?</h3>
-      <ul>
-        <li><b>Planowanie na cały miesiąc:</b> przegląd treści w kalendarzu pozwala rozłożyć publikacje w czasie i lepiej zaplanować działania.</li>
-        <li><b>Szczegóły każdego materiału:</b> zapisuj pomysły na elementy wizualne, podpisy, hashtagi, dźwięki i wezwania do działania (CTA).</li>
-        <li><b>Kontrola procesu tworzenia:</b> śledź kolejne etapy pracy, od burzy mózgów i nagrywania, przez edycję i zatwierdzanie, aż po publikację i ponowne wykorzystanie materiałów.</li>
-        <li><b>Współpraca z zespołem:</b> korzystaj ze statusów, pasków postępu i etapów akceptacji, aby łatwiej koordynować zadania jako menedżer mediów społecznościowych lub wirtualna asystentka.</li>
-      </ul>
-      <h3>Dopasuj kalendarz do swojego sposobu pracy</h3>
-      <p>Planer możesz dostosować do własnych potrzeb, dodając platformy, filary i formaty treści oraz statusy realizacji. Sprawdzi się przy planowaniu publikacji na Instagramie, YouTubie, TikToku, Facebooku, Pintereście i innych kanałach.</p>
-      <p>Szablon automatycznie uzupełnia daty i działa w Arkuszach Google. Możesz korzystać z niego na komputerze, tablecie lub telefonie.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="11" id="newslettery">
-    <div class="cover"><img src="c/newslettery.jpg" alt="Okładka: 30 gotowych newsletterów" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">11 / E-MAIL</div>
-      <h2>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</h2>
-      <p class="lead">Nie każda wiadomość e-mail musi powstawać od zera.</p>
-      <p>W tym zestawie znajdziesz gotowe projekty, które możesz wykorzystać do informowania o nowościach, prezentowania produktów, przypominania o niedokończonych zakupach czy utrzymywania kontaktu z klientami. Wybierz odpowiedni układ, dodaj własną treść i dopasuj wygląd do swojej marki.</p>
-      <h3>Jakie wiadomości możesz przygotować?</h3>
-      <ul>
-        <li>Powitalne e-maile dla nowych subskrybentów</li>
-        <li>Newslettery edukacyjne z poradami, wskazówkami i aktualnościami z bloga</li>
-        <li>Wiadomości sprzedażowe, zapowiedzi promocji i prezentacje produktów</li>
-        <li>Przypomnienia o porzuconych koszykach i zachęty do ponownych zakupów</li>
-        <li>E-maile z podziękowaniami, prośbami o opinię i ankietami</li>
-        <li>Wiadomości o bestsellerach i darmowej dostawie</li>
-        <li>E-maile zachęcające do obserwowania profili społecznościowych, zapisania się na SMS-y lub polecania marki znajomym</li>
-        <li>Wiadomości urodzinowe, informacje o nowych odcinkach podcastu i inne treści angażujące odbiorców</li>
-      </ul>
-      <h3>Dostosuj projekty do swojej marki</h3>
-      <p>Każdy z 30 szablonów możesz edytować w Canvie. Szablony możesz wykorzystywać w różnych kampaniach, łączyć ze sobą i ponownie dostosowywać do kolejnych potrzeb. To wygodne rozwiązanie, jeśli chcesz zachować spójny wygląd komunikacji e-mailowej i sprawniej przygotowywać newslettery.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="12" id="shortcody">
-    <div class="cover"><img src="c/shortcody.jpg" alt="Okładka: 350 shortcodów do ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
-    <div class="copy">
-      <div class="label">12 / SHORTCODY</div>
-      <span class="badge">Webbook</span>
-      <h2>Shortcody ChatGPT. 350 gotowych komend do obrazów i wideo</h2>
-      <p class="lead">Twórz profesjonalne materiały wizualne, które nie wyglądają jak typowe grafiki AI.</p>
-      <p>W tym webbooku znajdziesz 350 gotowych komend, które pomogą Ci tworzyć bardziej przemyślane, estetyczne i profesjonalne materiały wizualne, zamiast obrazów z charakterystycznym „efektem AI”.</p>
-      <p>Nie musisz za każdym razem zastanawiać się, jak napisać skuteczny prompt. Wybierz gotową komendę, dopasuj ją do swojej wizji i odkryj nowe możliwości tworzenia z AI.</p>
-      <h3>Co znajdziesz w środku?</h3>
-      <ul>
-        <li>350 gotowych shortcodów do obrazów i wideo, podzielonych na kategorie</li>
-        <li>Komendy do zdjęć produktowych, które wyglądają jak z profesjonalnej sesji</li>
-        <li>Style graficzne: od realistycznych zdjęć po ilustracje, schematy i projekty techniczne</li>
-        <li>Komendy do grafik na social media, okładek i materiałów reklamowych</li>
-        <li>Shortcody do tworzenia krótkich form wideo i animacji</li>
-        <li>Instrukcję, jak używać shortcodów w ChatGPT i jak łączyć je ze sobą</li>
-        <li>Wskazówki, jak dopasować każdą komendę do własnej marki i stylu</li>
-      </ul>
-      <h3>Co zyskujesz?</h3>
-      <ul>
-        <li><b>Oszczędność czasu:</b> zamiast pisać długie prompty, wpisujesz jedną komendę.</li>
-        <li><b>Lepszą jakość:</b> obrazy bez typowego „efektu AI”, które możesz śmiało publikować.</li>
-        <li><b>Spójny wygląd materiałów,</b> bo te same komendy dają powtarzalny styl.</li>
-        <li><b>Gotowe pomysły,</b> gdy brakuje Ci inspiracji.</li>
-        <li><b>Swobodę tworzenia</b> bez znajomości grafiki i bez drogich programów.</li>
-      </ul>
-      <h3>Dla kogo jest to narzędzie?</h3>
-      <p>Dla twórców internetowych, właścicieli małych firm, marketerów i wszystkich, którzy chcą tworzyć estetyczne materiały wizualne z AI, szybciej i bez zgadywania, jak napisać dobry prompt.</p>
-    </div>
-  </article>
-
-<article class="product" data-n="13" id="rolki-claude">
+  <article class="product" id="rolki-claude" data-n="01" data-cat="ai" style="--acc:#F08A3C">
     <div class="cover"><img src="c/rolki-claude.jpg" alt="Okładka: Montuj rolki z Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
-      <div class="label">13 / TUTORIAL</div>
-      <span class="badge">Tutorial krok po kroku</span>
+      <div class="meta"><span class="label">01 / 18 · AI i automatyzacje</span><span class="hot">Hit 2026</span></div>
       <h2>Montuj rolki z Claude</h2>
-      <p class="lead">Nie każda rolka musi oznaczać godziny w aplikacji do montażu.</p>
-      <p>W tym przewodniku krok po kroku nauczysz się montować rolki z Claude: przynosisz surowe nagranie, na którym mówisz do kamery, a Claude buduje cały montaż za Ciebie. Robi napisy, wyróżnia hasła, dodaje naklejki i zdjęcia produktów oraz wyrównuje dźwięk. Podgląd oglądasz na żywo, a poprawki podajesz zwykłą wiadomością z numerem klatki.</p>
-      <h3>Czego się nauczysz?</h3>
-      <ul>
-        <li>Instalacji krok po kroku na macOS, Windows i Linuksie, z gotowymi poleceniami do skopiowania</li>
-        <li>Automatycznej transkrypcji z czasem każdego słowa, także dla nagrań po polsku</li>
-        <li>Dopasowania stylu montażu do rolki wzorcowej, dodawania logo, okładek produktów i logotypów partnerów z wyciętym tłem</li>
-        <li>Szybkich poprawek: jedna uwaga z numerem klatki i gotowe</li>
-        <li>Wyrównania głośności ujęć i ustawienia dźwięku pod Instagram (−14 LUFS)</li>
-        <li>Eksportu gotowego filmu MP4 w formacie 1080×1920</li>
-        <li>Zasad projektowania rolek: strefy bezpieczne kadru, miejsce na napisy i naklejki, czego unikać</li>
-        <li>Rozwiązywania najczęstszych problemów, gdy coś nie działa</li>
-      </ul>
-      <h3>Gotowe polecenia w zestawie</h3>
-      <p>Pięć poleceń do skopiowania: start projektu, dopasowanie stylu, materiały marki, kontrola dźwięku i eksport. Uzupełniasz nawiasy, wysyłasz i gotowe. Instalację robisz raz (ok. 1 godziny), a każdą kolejną rolkę zaczynasz od skopiowania gotowego projektu, więc styl i ustawienia przechodzą dalej. To wygodne rozwiązanie, jeśli regularnie publikujesz rolki i chcesz utrzymać spójny wygląd bez ręcznego montażu.</p>
+      <p class="lead">Wgrywasz surowe nagranie. Claude oddaje gotową rolkę.</p>
+      <p>Koniec z godzinami na osi czasu. Mówisz do kamery, a Claude robi resztę: napisy słowo po słowie, wyróżnione hasła, naklejki, zdjęcia produktów i wyrównany dźwięk. Podgląd oglądasz na żywo, a poprawki wysyłasz jedną wiadomością z numerem klatki.</p>
+      <div class="formats"><span>Webbook</span><span>Tutorial</span><span>Claude</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>Instalacja krok po kroku na macOS, Windows i Linuksie, z poleceniami do skopiowania</li><li>Automatyczna transkrypcja z czasem każdego słowa, także po polsku</li><li>Montaż w stylu Twojej rolki wzorcowej: logo, okładki produktów, logotypy partnerów</li><li>Dźwięk ustawiony pod Instagram (−14 LUFS) i eksport MP4 1080×1920</li><li>Zasady kadru: strefy bezpieczne, miejsce na napisy i naklejki</li><li>5 gotowych poleceń: start, styl, marka, dźwięk, eksport</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Rolka w minuty, nie godziny</b><span>Instalujesz raz (ok. 1 h), każdą kolejną rolkę zaczynasz od kopii projektu.</span></div><div><b>Spójny styl w każdym filmie</b><span>Ustawienia i wygląd przechodzą na następne rolki.</span></div><div><b>Bez programów do montażu</b><span>Poprawki piszesz zwykłym językiem.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, marek osobistych i sklepów, które publikują rolki regularnie i chcą profesjonalnego montażu bez montażysty.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Montaż z AI to jedna z najszybciej rosnących umiejętności 2026. Kto zacznie teraz, publikuje częściej niż konkurencja.</div>
     </div>
   </article>
-
-<article class="product" data-n="14" id="manychat">
-    <div class="cover"><img src="c/manychat.jpg" alt="Okładka: 30 szablonów automatyzacji ManyChat" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+  <article class="product" id="tworz-claude" data-n="02" data-cat="ai" style="--acc:#F2683C">
+    <div class="cover"><img src="c/tworz-claude.jpg" alt="Okładka: Twórz zdjęcia i wideo z Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
-      <div class="label">14 / MANYCHAT</div>
-      <h2>30 szablonów automatyzacji ManyChat</h2>
-      <p class="lead">Automatyczne wiadomości. Zbieraj leady. Sprzedawaj każdego dnia.</p>
-      <p>Usprawnij działania marketingowe i zadbaj o sprawniejszą komunikację z odbiorcami dzięki zestawowi 30 gotowych automatyzacji ManyChat. Znajdziesz tu różnorodne rozwiązania, które pomogą Ci promować ofertę, pozyskiwać potencjalnych klientów, rozwijać społeczność i zwiększać zaangażowanie na Instagramie oraz TikToku.</p>
-      <h3>Co zawiera zestaw?</h3>
-      <ul>
-        <li><b>Automatyzacje sprzedażowe:</b> sprzedaż przez Instagram Stories i transmisje na żywo, kupony rabatowe, oferty dodatkowe oraz promocje po kliknięciu reklamy.</li>
-        <li><b>Kontakt z odbiorcami:</b> odpowiedzi na często zadawane pytania, zbieranie opinii, ankiety i wdrażanie nowych klientów.</li>
-        <li><b>Pozyskiwanie leadów:</b> budowanie listy e-mailowej, promocja kursów online, obsługa zapisów na webinary i generowanie kontaktów z reklam.</li>
-        <li><b>Rozwój społeczności:</b> zwiększanie liczby widzów na YouTube, konkursy, programy partnerskie i działania angażujące obserwujących.</li>
-        <li><b>Interaktywne funkcje:</b> quizy marketingowe, gry typu „mit czy fakt”, generatory stylu marketingowego, ciasteczka z wróżbą oraz boty do zabaw z odbiorcami.</li>
-      </ul>
-      <h3>Dla kogo?</h3>
-      <p>Zestaw sprawdzi się u specjalistów ds. marketingu cyfrowego, przedsiębiorców, właścicieli firm internetowych i menedżerów mediów społecznościowych. To praktyczna baza gotowych rozwiązań, które możesz dostosować do swojej marki i celów, zamiast tworzyć każdą automatyzację od podstaw.</p>
+      <div class="meta"><span class="label">02 / 18 · AI i automatyzacje</span><span class="hot">Nowość</span></div>
+      <h2>Twórz zdjęcia i wideo z Claude</h2>
+      <p class="lead">Twoje własne studio AI: zdjęcia, wideo i lektor w jednym oknie.</p>
+      <p>Piszesz jedno zdanie, a Claude tworzy zdjęcie produktu, film promocyjny albo profesjonalny głos lektora. Łączysz Claude z ponad 130 modelami AI, takimi jak Flux, Recraft, Kling, Veo czy ElevenLabs, i montujesz gotowe rolki w Remotion. Bez subskrypcji do każdej aplikacji osobno.</p>
+      <div class="formats"><span>Webbook</span><span>Claude</span><span>130+ modeli AI</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>Konfiguracja krok po kroku: Claude, Picsart CLI i Remotion</li><li>Przegląd modeli AI: do czego służy każdy i ile orientacyjnie kosztuje</li><li>Gotowe prompty do zdjęć produktowych, grafik i krajobrazów</li><li>Prompty do wideo: produkt 360°, kinowy B-roll, ujęcia natury</li><li>Montaż w Remotion: animowane intro, napisy, eksport do MP4</li><li>Generowanie głosu lektora do rolek i reklam</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Sesja zdjęciowa bez fotografa</b><span>Zdjęcia produktów i filmy na zawołanie.</span></div><div><b>Płacisz tylko za efekt</b><span>Kredyty zamiast kilku miesięcznych abonamentów.</span></div><div><b>Mówisz po polsku</b><span>Opisujesz efekt, Claude dobiera model i parametry.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, sklepów online i marketerów, którzy chcą tworzyć materiały premium szybciej i taniej. Idealny duet z „Montuj rolki z Claude”.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Klienci w 2026 oczekują wideo i zdjęć jakości reklamowej. Ten przewodnik daje je bez budżetu agencji.</div>
     </div>
   </article>
-
-<article class="product" data-n="15" id="bez-twarzy">
-    <div class="cover"><img src="c/bez-twarzy.jpg" alt="Okładka: 10 000+ estetycznych rolek bez twarzy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+  <article class="product" id="manychat" data-n="03" data-cat="ai" style="--acc:#EC3E86">
+    <div class="cover"><img src="c/manychat.jpg" alt="Okładka: 26 szablonów automatyzacji ManyChat" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
-      <div class="label">15 / BEZ TWARZY</div>
-      <h2>10 000+ rolek bez pokazywania twarzy</h2>
-      <p class="lead">Estetyczne treści na Instagram, TikToka i YouTube Shorts, bez pokazywania twarzy.</p>
-      <p>Pakiet zawiera ponad 10 000 gotowych materiałów wizualnych. Znajdziesz tu rolki, filmy, zdjęcia i edytowalne szablony Canva w różnych stylach, które pomogą Ci przygotowywać atrakcyjne publikacje, zachować spójny wizerunek marki i usprawnić tworzenie treści.</p>
-      <h3>Co zawiera pakiet?</h3>
-      <ul>
-        <li><b>Gotowe rolki i materiały wideo:</b> ponad 10 000 estetycznych materiałów do wykorzystania w mediach społecznościowych, bez konieczności samodzielnego nagrywania.</li>
-        <li><b>Różnorodne style wizualne:</b> materiały w estetyce luxury, aesthetic i innych stylach, które możesz dopasować do charakteru swojej marki.</li>
-        <li><b>Szablony Canva:</b> edytowalne projekty, które pozwalają dostosować treści do własnych potrzeb i identyfikacji wizualnej.</li>
-        <li><b>Materiały do różnych formatów:</b> treści do rolek, krótkich filmów, zdjęć i relacji na Instagramie.</li>
-        <li><b>Natychmiastowy dostęp</b> do plików.</li>
-      </ul>
-      <h3>Dla kogo?</h3>
-      <p>Pakiet sprawdzi się u twórców internetowych, influencerów, trenerów, przedsiębiorców i menedżerów mediów społecznościowych, którzy chcą tworzyć estetyczne treści bez pokazywania twarzy. To również propozycja dla osób sprzedających produkty cyfrowe i rozwijających własną markę w internecie.</p>
+      <div class="meta"><span class="label">03 / 18 · AI i automatyzacje</span><span class="hot">Sprzedaż w DM</span></div>
+      <h2>26 szablonów automatyzacji ManyChat</h2>
+      <p class="lead">Twoje DM sprzedają, kiedy Ty śpisz.</p>
+      <p>Ktoś komentuje rolkę, a po sekundzie dostaje w wiadomości link, kod rabatowy albo zaproszenie na konsultację. 26 gotowych schematów instalujesz jednym kliknięciem na swoim koncie ManyChat, podmieniasz treści na swoje i publikujesz.</p>
+      <div class="formats"><span>Webbook</span><span>ManyChat</span><span>Instagram DM</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>Sprzedaż: Stories, Instagram Live, kupony, upsell i downsell po reklamie</li><li>Leady: lista e-mailowa, lead magnet, zapisy na webinar</li><li>Konsultacje i obsługa: kwalifikacja klienta, rezerwacja, FAQ, onboarding, opinie</li><li>Wzrost: ruch z TikToka na Instagram, widzowie na YouTube, program afiliacyjny</li><li>Zabawa, która angażuje: quizy, „mit czy fakt”, wróżby, generator memów</li><li>Przewodnik: konto, import, wyzwalacze, test i publikacja</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Odpowiedź w sekundę, 24/7</b><span>Żaden komentarz nie zostaje bez reakcji.</span></div><div><b>Leady same trafiają na listę</b><span>Zbierasz e-maile bez wychodzenia z Instagrama.</span></div><div><b>Gotowe w kilka minut</b><span>Klikasz, zapisujesz, podmieniasz treści.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, coachów, sklepów i agencji, które dostają komentarze i wiadomości, a chcą zamieniać je w sprzedaż.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Komentarz z hasłem i automatyczna wiadomość to dziś standard u największych twórców. Teraz masz to samo, gotowe.</div>
     </div>
   </article>
-
-<article class="product" data-n="16" id="podroze">
+  <article class="product" id="shortcody" data-n="04" data-cat="ai" style="--acc:#3D6BF0">
+    <div class="cover"><img src="c/shortcody.jpg" alt="Okładka: 250+ shortcodów do ChatGPT" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">04 / 18 · AI i automatyzacje</span></div>
+      <h2>250+ shortcodów do ChatGPT</h2>
+      <p class="lead">Jedno słowo zamiast długiego promptu. Efekt jak z profesjonalnej sesji.</p>
+      <p>Wpisujesz krótki kod, np. /editorial albo /productshot, dodajesz opis i dostajesz obraz bez typowego „efektu AI”. 230 shortcodów i 25 gotowych zestawów do zdjęć, reklam, mockupów i wideo AI.</p>
+      <div class="formats"><span>Webbook</span><span>ChatGPT</span><span>Obrazy i wideo AI</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>230 shortcodów w 22 kategoriach: portret, fashion, beauty, produkt, travel, food, 3D, wideo</li><li>25 gotowych zestawów, np. Premium Fashion, Skincare UGC, Luxury Hotel, Social Media Ad</li><li>Komendy do światła, optyki, kompozycji i formatów, np. /goldenhour, /9:16</li><li>Słownik do skopiowania jednym kliknięciem, dzięki któremu ChatGPT rozumie każdy kod</li><li>Instrukcja łączenia komend w kompletne formuły</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Grafiki, które nie krzyczą „AI”</b><span>Możesz je śmiało publikować i sprzedawać.</span></div><div><b>Powtarzalny styl marki</b><span>Te same kody dają spójny wygląd.</span></div><div><b>Bez grafika i drogich programów</b><span>Wystarczy ChatGPT.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, sklepów i marketerów, którzy tworzą zdjęcia, reklamy i wideo z AI i chcą przestać zgadywać, jak napisać dobry prompt.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Obrazy AI są wszędzie, ale tylko dobre wyglądają premium. Shortcody to skrót do tej jakości.</div>
+    </div>
+  </article>
+  <article class="product" id="prompty550" data-n="05" data-cat="ai" style="--acc:#F59A4F">
+    <div class="cover"><img src="c/prompty550.jpg" alt="Okładka: 550 promptów ChatGPT dla twórców cyfrowych" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">05 / 18 · AI i automatyzacje</span></div>
+      <h2>550 promptów ChatGPT dla twórców cyfrowych</h2>
+      <p class="lead">Od pomysłu na markę do sprzedaży produktu: ChatGPT pracuje za Ciebie.</p>
+      <p>550 sprawdzonych poleceń dla twórców, influencerów i osób sprzedających produkty cyfrowe. Branding, subskrypcje, Instagram, e-mail, reklamy, afiliacja i strategia, w 11 kategoriach. Wybierasz, kopiujesz jednym kliknięciem i wklejasz do ChatGPT.</p>
+      <div class="formats"><span>Webbook</span><span>ChatGPT</span><span>11 kategorii</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>550 promptów w 11 kategoriach, z wyszukiwarką</li><li>Posty, rolki, opisy i nagłówki, które przyciągają uwagę</li><li>Strategie contentowe i budowanie marki osobistej</li><li>Tworzenie, promocja i sprzedaż produktów cyfrowych</li><li>Kopiowanie jednym kliknięciem</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Koniec z pustą kartką</b><span>Zawsze wiesz, od czego zacząć.</span></div><div><b>Treści szybciej</b><span>Godziny planowania zamieniasz w minuty.</span></div><div><b>Dla początkujących i zaawansowanych</b><span>Prompty działają od pierwszego użycia.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, freelancerów i małych firm, które chcą wykorzystać AI w codziennej pracy nad treściami i sprzedażą.</p>
+      <div class="why"><b>Dlaczego teraz?</b> AI stało się codziennym narzędziem twórców. Wygrywają ci, którzy wiedzą, o co je zapytać.</div>
+    </div>
+  </article>
+  <article class="product" id="prompty" data-n="06" data-cat="ai" style="--acc:#5B86FF">
+    <div class="cover"><img src="c/prompty.jpg" alt="Okładka: 10 000+ promptów ChatGPT dla biznesu" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">06 / 18 · AI i automatyzacje</span></div>
+      <h2>10 000+ promptów ChatGPT dla biznesu</h2>
+      <p class="lead">Cały dział marketingu, sprzedaży i HR w jednej wyszukiwarce.</p>
+      <p>Ponad 11 800 gotowych poleceń w 108 tematach, uporządkowanych według działów firmy. Wybierasz dział, otwierasz temat, uzupełniasz pola w nawiasach i masz gotowy plan, tekst albo analizę.</p>
+      <div class="formats"><span>Webbook</span><span>ChatGPT</span><span>7 działów firmy</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>7 działów: Marketing, Sprzedaż, Obsługa klienta, Biznes, Startup, HR, Produktywność</li><li>108 tematów, np. cold maile, SEO, oceny pracownicze, pitch deck, zarządzanie czasem</li><li>Wyszukiwarka i ulubione prompty</li><li>Prompty z polami do uzupełnienia, gotowe do skopiowania</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Gotowe polecenie na każde zadanie</b><span>Od kampanii po rozmowę z klientem.</span></div><div><b>Oszczędność godzin co tydzień</b><span>Nie wymyślasz, jak zapytać AI.</span></div><div><b>Dla całego zespołu</b><span>Każdy dział znajdzie coś dla siebie.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla przedsiębiorców, menedżerów, marketerów i freelancerów, którzy chcą pracować szybciej i mądrzej z AI.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Firmy w 2026 wdrażają AI w każdym dziale. Ta baza to gotowy start bez szkoleń.</div>
+    </div>
+  </article>
+  <article class="product" id="hooki" data-n="07" data-cat="tresci" style="--acc:#E8307F">
+    <div class="cover"><img src="c/hooki.jpg" alt="Okładka: 450+ najlepszych hooków na Instagram i TikTok" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">07 / 18 · Hooki i copy</span></div>
+      <h2>450+ najlepszych hooków na Instagram i TikTok</h2>
+      <p class="lead">Masz 3 sekundy. Te zdania je wygrywają.</p>
+      <p>Ponad 450 sprawdzonych zdań otwierających, które zatrzymują przewijanie i trzymają widza do końca rolki. Działają także w treściach bez pokazywania twarzy: wybierasz hook, nakładasz na estetyczny B-roll i publikujesz w 2 minuty.</p>
+      <div class="formats"><span>Webbook</span><span>Instagram</span><span>TikTok</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>450+ hooków w 10 kategoriach: ciekawość, mity, kontrowersje, porady, storytelling i więcej</li><li>Przycisk „Losuj hook”, gdy brakuje pomysłu</li><li>Pola do uzupełnienia oznaczone kolorem</li><li>Ulubione hooki zawsze pod ręką</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Zatrzymujesz scroll</b><span>Pierwsze 3 sekundy pracują na zasięg.</span></div><div><b>Dłuższy czas oglądania</b><span>Ciekawość prowadzi widza do końca i do opisu.</span></div><div><b>Zero paraliżu decyzyjnego</b><span>Otwierasz, wybierasz, publikujesz.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, marek osobistych, ekspertów i sprzedawców, którzy chcą zasięgów bez stresu i bez nagrywania siebie.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Algorytmy nagradzają czas oglądania. Dobry hook to najtańszy sposób na większe zasięgi.</div>
+    </div>
+  </article>
+  <article class="product" id="cta" data-n="08" data-cat="tresci" style="--acc:#1FA67A">
+    <div class="cover"><img src="c/cta.jpg" alt="Okładka: 101 wezwań do działania (CTA), które sprzedają" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">08 / 18 · Hooki i copy</span></div>
+      <h2>101 wezwań do działania (CTA), które sprzedają</h2>
+      <p class="lead">Twoja treść przyciąga uwagę. CTA zamienia ją w sprzedaż.</p>
+      <p>101 gotowych wezwań do działania, które mówią odbiorcy dokładnie, co ma zrobić: kliknąć, kupić, zapisać się albo napisać do Ciebie. Wybierasz, kopiujesz i wklejasz do posta, rolki, relacji lub e-maila.</p>
+      <div class="formats"><span>Webbook</span><span>Copywriting</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>101 CTA w 4 grupach: bio i linki, social media i wideo, sprzedaż i oferty, zaangażowanie</li><li>Kopiowanie jednym kliknięciem i ulubione CTA</li><li>Do postów, rolek, relacji, bio i e-maili</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Więcej konwersji</b><span>Prosty komunikat to łatwiejsza decyzja.</span></div><div><b>Ruch tam, gdzie go chcesz</b><span>Na stronę, do sklepu, na listę mailingową.</span></div><div><b>Mniej chaosu dla klienta</b><span>Jeden jasny następny krok.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców i firm, które publikują regularnie, a chcą, żeby każda treść kończyła się działaniem odbiorcy.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Zasięg bez CTA to stracona sprzedaż. Jedno zdanie potrafi zmienić wynik posta.</div>
+    </div>
+  </article>
+  <article class="product" id="pomysly" data-n="09" data-cat="ai" style="--acc:#2FA08A">
+    <div class="cover"><img src="c/pomysly.jpg" alt="Okładka: 500 pomysłów na produkt cyfrowy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">09 / 18 · AI i automatyzacje</span></div>
+      <h2>500 pomysłów na produkt cyfrowy</h2>
+      <p class="lead">Nie wiesz, co sprzedawać? Wybierz z 500 gotowych pomysłów.</p>
+      <p>500 pomysłów na produkty cyfrowe w 24 niszach, od fitnessu i finansów po Instagram, UGC i Amazon KDP. Przy każdym pomyśle kopiujesz prompt, który zamienia go w plan produktu: odbiorcę, zawartość, cenę i start sprzedaży.</p>
+      <div class="formats"><span>Webbook</span><span>24 nisze</span><span>Prompt ChatGPT</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>500 pomysłów w 24 niszach i 7 formatach: e-booki, szablony, kursy, aplikacje i więcej</li><li>Prompt „Rozpisz z ChatGPT” przy każdym pomyśle</li><li>Losowanie pomysłu i shortlista ulubionych</li><li>Pomysły pod Etsy, Amazon KDP, Notion, Canva i narzędzia AI</li><li>Bonus: poradnik o Stories, czyli jak planować relacje, używać CTA i prezentować ofertę</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Pomysł w 5 minut</b><span>Zamiast tygodni szukania.</span></div><div><b>Od pomysłu do planu</b><span>ChatGPT rozpisuje produkt za Ciebie.</span></div><div><b>Tylko produkty cyfrowe</b><span>Tworzysz raz, sprzedajesz wiele razy.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla osób, które planują pierwszy produkt cyfrowy, i dla twórców, którzy szukają kolejnego źródła przychodu.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Produkty cyfrowe to najprostszy sposób na skalowanie przychodu twórcy. Ta baza skraca start do minimum.</div>
+    </div>
+  </article>
+  <article class="product" id="bez-twarzy" data-n="10" data-cat="wideo" style="--acc:#C9783F">
+    <div class="cover"><img src="c/bez-twarzy.jpg" alt="Okładka: 10 000+ estetycznych rolek bez pokazywania twarzy" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">10 / 18 · Rolki i wideo</span></div>
+      <h2>10 000+ estetycznych rolek bez pokazywania twarzy</h2>
+      <p class="lead">Rozwijaj profil, nie pokazując się przed kamerą.</p>
+      <p>Ponad 10 000 gotowych materiałów: rolki, filmy, zdjęcia i edytowalne szablony Canva w estetyce luxury, aesthetic i wielu innych. Publikujesz codziennie, a Twój profil wygląda spójnie i premium.</p>
+      <div class="formats"><span>Wideo</span><span>Canva</span><span>Instagram · TikTok · Shorts</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>10 000+ estetycznych rolek i materiałów wideo</li><li>Style luxury, aesthetic i inne do dopasowania do marki</li><li>Edytowalne szablony Canva</li><li>Materiały do rolek, krótkich filmów, zdjęć i relacji</li><li>Natychmiastowy dostęp do plików</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Codzienne publikacje</b><span>Bez nagrywania i bez sesji.</span></div><div><b>Spójny wygląd profilu</b><span>Jeden styl we wszystkich treściach.</span></div><div><b>Anonimowo i profesjonalnie</b><span>Wartość zamiast twarzy.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, coachów, przedsiębiorców i osób sprzedających produkty cyfrowe, które wolą zostać za kamerą.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Profile bez twarzy to jeden z największych trendów w social mediach. Ten pakiet to gotowe treści na miesiące.</div>
+    </div>
+  </article>
+  <article class="product" id="mockupy" data-n="11" data-cat="canva" style="--acc:#E8467C">
+    <div class="cover"><img src="c/mockupy.jpg" alt="Okładka: 1000 szablonów mockupów do promocji i sprzedaży" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">11 / 18 · Szablony Canva</span></div>
+      <h2>1000 szablonów mockupów do promocji i sprzedaży</h2>
+      <p class="lead">Oferta, która wygląda jak od dużej marki. W kilka minut.</p>
+      <p>Ponad 1000 estetycznych makiet, które edytujesz w Canvie, także w darmowej wersji. Wybierasz szablon, dodajesz swój produkt i Twoja oferta jest gotowa do publikacji, bez projektowania od zera.</p>
+      <div class="formats"><span>Canva</span><span>Wideo</span><span>Darmowa Canva wystarczy</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>1000+ makiet ofert w różnych rozmiarach i formatach, w tym:</li><li>100+ makiet wideo do dynamicznych prezentacji</li><li>300+ makiet planerów i zaproszeń</li><li>20+ scen sprzedażowych produktów</li><li>50 banerów sklepowych i 70 stron z podziękowaniami oraz instrukcjami</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Produkt wygląda premium</b><span>A to podnosi cenę, jaką klient chce zapłacić.</span></div><div><b>Oferta w minuty</b><span>Zamiast godzin w programie graficznym.</span></div><div><b>Twoje kolory i czcionki</b><span>Wszystko dopasujesz do marki.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców i sklepów sprzedających produkty cyfrowe, planery, e-booki i kursy.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Klient kupuje oczami. Dobry mockup to często różnica między „ładne” a „kupuję”.</div>
+    </div>
+  </article>
+  <article class="product" id="planer" data-n="12" data-cat="plan" style="--acc:#C83FD6">
+    <div class="cover"><img src="c/planer.jpg" alt="Okładka: Planer contentu do social mediów" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">12 / 18 · Planowanie i e-mail</span></div>
+      <h2>Planer contentu do social mediów</h2>
+      <p class="lead">Cały miesiąc publikacji w jednym miejscu. Koniec z chaosem.</p>
+      <p>Pomysły, terminy, podpisy, hashtagi i statusy: wszystko w edytowalnym kalendarzu na 30 dni. Przechodzisz od pomysłu do publikacji bez gubienia wątków, nawet przy kilku kanałach naraz.</p>
+      <div class="formats"><span>Google Sheets</span><span>30 dni</span><span>Telefon i komputer</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>Kalendarz na cały miesiąc z automatycznymi datami</li><li>Miejsce na pomysły, podpisy, hashtagi, dźwięki i CTA</li><li>Etapy pracy: pomysł, nagranie, edycja, akceptacja, publikacja</li><li>Statusy i paski postępu do pracy z zespołem lub klientem</li><li>Platformy, filary i formaty dopasujesz do siebie</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Publikujesz regularnie</b><span>Bo wiesz, co, kiedy i gdzie.</span></div><div><b>Mniej stresu przed postem</b><span>Wszystko zaplanowane wcześniej.</span></div><div><b>Gotowe do współpracy</b><span>Idealne dla social media managerów i asystentek.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, marek i social media managerów, którzy prowadzą Instagram, TikTok, YouTube, Facebook czy Pinterest.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Regularność wygrywa z algorytmem. Planer sprawia, że przestaje zależeć od weny.</div>
+    </div>
+  </article>
+  <article class="product" id="newslettery" data-n="13" data-cat="plan" style="--acc:#E07A3F">
+    <div class="cover"><img src="c/newslettery.jpg" alt="Okładka: 30 gotowych newsletterów: powitanie, edukacja, sprzedaż" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">13 / 18 · Planowanie i e-mail</span></div>
+      <h2>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</h2>
+      <p class="lead">E-maile, które sprzedają, bez pisania od zera.</p>
+      <p>30 gotowych projektów newsletterów w Canvie: od powitania nowego subskrybenta, przez porady i nowości, po promocje i przypomnienia o porzuconym koszyku. Wybierasz układ, wklejasz treść i dopasowujesz do marki.</p>
+      <div class="formats"><span>Canva</span><span>E-mail marketing</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>Powitania dla nowych subskrybentów</li><li>Newslettery edukacyjne z poradami i nowościami</li><li>Sprzedaż: promocje, bestsellery, darmowa dostawa</li><li>Porzucone koszyki i zachęty do ponownego zakupu</li><li>Podziękowania, prośby o opinię, ankiety, życzenia urodzinowe</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Lista mailingowa zaczyna zarabiać</b><span>Masz gotowe wiadomości na każdą okazję.</span></div><div><b>Spójny wygląd komunikacji</b><span>Każdy e-mail w stylu marki.</span></div><div><b>Szybciej co tydzień</b><span>Szablony łączysz i używasz ponownie.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców i sklepów online, które budują listę mailingową i chcą regularnie z nią rozmawiać.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Lista e-mailowa to jedyny kanał, którego nie zabierze Ci algorytm.</div>
+    </div>
+  </article>
+  <article class="product" id="podroze" data-n="14" data-cat="wideo" style="--acc:#1E9FD6">
     <div class="cover"><img src="c/podroze.jpg" alt="Okładka: 900+ estetycznych rolek podróżniczych" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
-      <div class="label">16 / PODRÓŻE</div>
+      <div class="meta"><span class="label">14 / 18 · Rolki i wideo</span></div>
       <h2>900+ estetycznych rolek podróżniczych</h2>
-      <p class="lead">Marzysz o profilu pełnym pięknych widoków, luksusowych wnętrz i inspirujących miejsc?</p>
-      <p>Ten pakiet zawiera ponad 900 materiałów wideo przedstawiających wyjątkowe destynacje, eleganckie hotele, prywatne wille, malownicze plaże i klimatyczne zakątki świata. Wykorzystaj je, aby tworzyć estetyczne rolki, inspirować odbiorców i nadać swojemu profilowi wyjątkowy charakter.</p>
-      <h3>Co tu znajdziesz?</h3>
-      <ul>
-        <li>Ponad 900 gotowych rolek i ujęć podróżniczych</li>
-        <li>Piękne hotele, luksusowe wille i wyjątkowe miejsca na całym świecie</li>
-        <li>Malownicze krajobrazy, zachwycające widoki i inspirujące kadry</li>
-        <li>Materiały idealne do tworzenia rolek na Instagram, TikToka i YouTube Shorts</li>
-        <li>Gotowe wideo, dzięki którym nie musisz samodzielnie nagrywać ani podróżować, aby tworzyć atrakcyjne treści</li>
-      </ul>
-      <h3>Dla kogo?</h3>
-      <p>Dla twórców, którzy kochają estetyczne profile, tematykę podróży i luksusowy styl życia. Pakiet sprawdzi się zarówno u osób budujących markę osobistą, jak i u twórców profili bez pokazywania twarzy, którzy chcą regularnie publikować piękne i angażujące treści.</p>
+      <p class="lead">Wille, plaże i luksusowe hotele na Twoim profilu. Bez wyjazdu.</p>
+      <p>Ponad 900 materiałów wideo z wyjątkowych destynacji: eleganckie hotele, prywatne wille, malownicze plaże i klimatyczne zakątki świata. Edytujesz w Canvie, Edits albo CapCut i publikujesz rolki, które przenoszą widza w podróż.</p>
+      <div class="formats"><span>Wideo</span><span>Canva · Edits · CapCut</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>900+ gotowych rolek i ujęć podróżniczych</li><li>Luksusowe hotele, wille i wyjątkowe miejsca na świecie</li><li>Krajobrazy i kadry, które zatrzymują scroll</li><li>Gotowe do Instagrama, TikToka i YouTube Shorts</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Profil jak z magazynu</b><span>Estetyka luksusowych podróży.</span></div><div><b>Bez nagrywania i podróżowania</b><span>Treści masz od razu.</span></div><div><b>Idealne do profili bez twarzy</b><span>Piękne kadry robią robotę.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców podróżniczych i lifestyle, marek osobistych i profili bez twarzy.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Treści podróżnicze należą do najczęściej zapisywanych i udostępnianych na Instagramie.</div>
+    </div>
+  </article>
+  <article class="product" id="wellness" data-n="15" data-cat="wideo" style="--acc:#B88A4A">
+    <div class="cover"><img src="c/wellness.jpg" alt="Okładka: 850+ rolek: zdrowy styl życia, afirmacje i równowaga" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">15 / 18 · Rolki i wideo</span></div>
+      <h2>850+ rolek: zdrowy styl życia, afirmacje i równowaga</h2>
+      <p class="lead">Spokojne kadry i afirmacje, które budują zaufanie do Twojej marki.</p>
+      <p>Ponad 850 materiałów do komunikacji marki wellness: bezosobowe rolki, filmy o zdrowiu z napisami, afirmacje i ćwiczenia uważności. Wszystko edytujesz w Canvie, także w darmowej wersji.</p>
+      <div class="formats"><span>Wideo</span><span>Canva</span><span>Wellness</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>250 bezosobowych rolek o duchowości i holistycznym stylu życia</li><li>200 filmów o zdrowiu z gotowymi napisami</li><li>100+ szablonów z afirmacjami i ćwiczeniami uważności</li><li>50 szablonów rolek, 50 relacji i 50 filmów wellness na Instagram</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Treści na każdy dzień</b><span>Masz po co sięgnąć przy planowaniu.</span></div><div><b>Twój styl, Twoje kolory</b><span>Dopasujesz do identyfikacji marki.</span></div><div><b>Spokój, który sprzedaje</b><span>Estetyka buduje zaufanie odbiorców.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla trenerów, instruktorów uważności, coachów i marek wellness.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Wellness i zdrowie psychiczne to jedna z najszybciej rosnących kategorii treści.</div>
+    </div>
+  </article>
+  <article class="product" id="macierzynstwo" data-n="16" data-cat="wideo" style="--acc:#C266C9">
+    <div class="cover"><img src="c/macierzynstwo.jpg" alt="Okładka: 920+ rolek o macierzyństwie" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">16 / 18 · Rolki i wideo</span></div>
+      <h2>920+ rolek o macierzyństwie</h2>
+      <p class="lead">Treści dla mam, które publikują się same.</p>
+      <p>Ponad 920 szablonów filmów o macierzyństwie, ciąży i życiu rodzinnym, gotowych do edycji w Canvie. Pokazujesz codzienność, dzielisz się doświadczeniem albo promujesz markę, bez projektowania każdego filmu od zera.</p>
+      <div class="formats"><span>Wideo</span><span>Canva</span><span>Mamy i rodzina</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>90+ rolek o macierzyństwie z gotowymi hookami</li><li>300+ rolek wideo o życiu mamy (część 1)</li><li>200+ rolek wideo o życiu mamy (część 2)</li><li>190+ rolek o ciąży</li><li>140+ rolek o niemowlętach i dzieciach</li><li>Wszystko do edycji w Canvie</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Oszczędność czasu</b><span>Gotowe układy zamiast godzin edycji.</span></div><div><b>Więcej zaangażowania</b><span>Estetyczne filmy i mocne początki.</span></div><div><b>Na każdy temat rodziny</b><span>Ciąża, dzieci, codzienność, Twoja marka.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla zapracowanych mam, momfluencerek i marek dla rodzin.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Treści parentingowe mają jedną z najbardziej zaangażowanych i lojalnych społeczności w sieci.</div>
+    </div>
+  </article>
+  <article class="product" id="identyfikacja" data-n="17" data-cat="canva" style="--acc:#2B8F5A">
+    <div class="cover"><img src="c/identyfikacja.jpg" alt="Okładka: 40 szablonów identyfikacji wizualnej marki" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">17 / 18 · Szablony Canva</span></div>
+      <h2>40 szablonów identyfikacji wizualnej marki</h2>
+      <p class="lead">Marka, która wygląda profesjonalnie od pierwszego wejrzenia.</p>
+      <p>40 edytowalnych szablonów brand board w Canvie: logo, paleta kolorów i czcionki w jednym miejscu. Porządkujesz identyfikację wizualną i masz spójny wygląd w materiałach firmowych i w social mediach.</p>
+      <div class="formats"><span>Canva</span><span>Branding</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>40 edytowalnych szablonów brand board</li><li>Miejsce na logo, kolory i czcionki marki</li><li>Pełna personalizacja: zdjęcia, teksty, tła, układ</li><li>Natychmiastowy dostęp do plików</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Spójny wizerunek</b><span>Wszędzie ta sama marka.</span></div><div><b>Bez grafika</b><span>Wystarczy darmowe konto w Canvie.</span></div><div><b>Gotowe dla klientów</b><span>Pokazujesz markę jak profesjonalne studio.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla małych firm, twórców, projektantów, trenerów i osób sprzedających produkty cyfrowe.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Spójna marka wzbudza zaufanie, a zaufanie skraca drogę do zakupu.</div>
+    </div>
+  </article>
+  <article class="product" id="naklejki" data-n="18" data-cat="canva" style="--acc:#D98A8A">
+    <div class="cover"><img src="c/naklejki.jpg" alt="Okładka: 500+ estetycznych naklejek na relacje i karuzele" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+    <div class="copy">
+      <div class="meta"><span class="label">18 / 18 · Szablony Canva</span></div>
+      <h2>500+ estetycznych naklejek na relacje i karuzele</h2>
+      <p class="lead">Detale, które sprawiają, że Twój profil wygląda jak przemyślany.</p>
+      <p>Ponad 500 estetycznych i sezonowych naklejek graficznych do relacji i karuzel. Koniec z szukaniem pojedynczych elementów w sieci: cała biblioteka detali w jednym miejscu.</p>
+      <div class="formats"><span>Grafiki</span><span>Stories</span><span>Karuzele</span></div>
+      <h3>Co dostajesz</h3>
+      <ul class="get"><li>500+ naklejek graficznych</li><li>Motywy sezonowe i estetyczne</li><li>Do Stories, karuzel i postów</li></ul>
+      <h3>Co zyskujesz</h3>
+      <div class="wins"><div><b>Spójny i estetyczny profil</b><span>Jeden styl detali we wszystkich treściach.</span></div><div><b>Oszczędność czasu</b><span>Wszystko w jednym folderze.</span></div><div><b>Więcej zatrzymań</b><span>Ładne detale przyciągają wzrok.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla influencerów, twórców i marek osobistych, które dbają o wygląd profilu.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Estetyka profilu to pierwsze, co ocenia nowy obserwujący.</div>
     </div>
   </article>
 
   <footer class="glass">
     <div class="big">Mniej wymyślania. <em>Więcej tworzenia.</em></div>
-    <div class="label">CreateOn Studio · @createonstudio</div>
+    <div class="label">Dostępne w CreateOn Studio · @createonstudio</div>
     <div class="label"><a href="#top">Wróć na górę ↑</a></div>
   </footer>
 </div>
@@ -498,90 +485,61 @@ footer .label a { color: var(--amber); text-decoration: none; }
 <script>
 (function () {
   /* Flowing fabric field: vertical folds lit amber at the centre, navy at the edges. */
-  var cv = document.getElementById('field');
-  var ctx = cv.getContext('2d');
+  var cv = document.getElementById('field'), ctx = cv.getContext('2d');
   var W = 0, H = 0, dpr = 1, t = 0, scrollPhase = 0;
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NAVY = [44, 72, 200], AMBER = [250, 172, 92], DEEP = [4, 6, 22];
-
-  function size() {
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    W = cv.clientWidth; H = cv.clientHeight;
-    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
+  function size() { dpr = Math.min(window.devicePixelRatio || 1, 1.5); W = cv.clientWidth; H = cv.clientHeight; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
   function mix(a, b, k) { return [0, 1, 2].map(function (i) { return Math.round(a[i] + (b[i] - a[i]) * k); }); }
   function rgb(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
-
-  function edge(x0, y, i, ph) {
-    return x0 + Math.sin(y * 0.006 + ph + i * 0.7) * 26 + Math.sin(y * 0.013 - ph * 1.3 + i) * 12;
-  }
-
+  function edge(x0, y, i, ph) { return x0 + Math.sin(y * 0.006 + ph + i * 0.7) * 26 + Math.sin(y * 0.013 - ph * 1.3 + i) * 12; }
   function draw() {
-    ctx.fillStyle = '#000002';
-    ctx.fillRect(0, 0, W, H);
-    var K = Math.max(14, Math.round(W / 46));
-    var fw = W / K * 1.9;
-    var ph = t + scrollPhase;
+    ctx.fillStyle = '#000002'; ctx.fillRect(0, 0, W, H);
+    var K = Math.max(14, Math.round(W / 46)), fw = W / K * 1.9, ph = t + scrollPhase;
     for (var i = -2; i < K + 2; i++) {
       var x0 = i * (W / K);
       var centre = 1 - Math.min(1, Math.abs((x0 + fw / 2) - W * 0.55) / (W * 0.55));
       var lit = mix(NAVY, AMBER, Math.pow(centre, 1.6));
-      var top = -40;
-      ctx.beginPath();
-      var step = 18, y;
-      ctx.moveTo(edge(x0, top, i, ph), top);
-      for (y = top; y <= H + step; y += step) ctx.lineTo(edge(x0, y, i, ph), y);
-      for (y = H + step; y >= top; y -= step) ctx.lineTo(edge(x0 + fw, y, i + 0.5, ph * 0.9), y);
+      ctx.beginPath(); var step = 18, y;
+      ctx.moveTo(edge(x0, -40, i, ph), -40);
+      for (y = -40; y <= H + step; y += step) ctx.lineTo(edge(x0, y, i, ph), y);
+      for (y = H + step; y >= -40; y -= step) ctx.lineTo(edge(x0 + fw, y, i + 0.5, ph * 0.9), y);
       ctx.closePath();
       var g = ctx.createLinearGradient(x0, 0, x0 + fw, 0);
-      g.addColorStop(0, rgb(DEEP, 0.95));
-      g.addColorStop(0.45, rgb(lit, 1));
-      g.addColorStop(0.6, rgb(mix(lit, [255, 230, 190], 0.25 * centre), 0.9));
-      g.addColorStop(1, rgb(DEEP, 0.95));
-      ctx.fillStyle = g;
-      ctx.fill();
+      g.addColorStop(0, rgb(DEEP, 0.95)); g.addColorStop(0.45, rgb(lit, 1)); g.addColorStop(0.6, rgb(mix(lit, [255, 230, 190], 0.25 * centre), 0.9)); g.addColorStop(1, rgb(DEEP, 0.95));
+      ctx.fillStyle = g; ctx.fill();
     }
     var fade = ctx.createLinearGradient(0, 0, 0, H);
-    fade.addColorStop(0, 'rgba(0,0,2,.55)');
-    fade.addColorStop(0.3, 'rgba(0,0,2,.2)');
-    fade.addColorStop(0.7, 'rgba(0,0,2,0)');
-    fade.addColorStop(1, 'rgba(20,10,10,.35)');
-    ctx.fillStyle = fade;
-    ctx.fillRect(0, 0, W, H);
+    fade.addColorStop(0, 'rgba(0,0,2,.55)'); fade.addColorStop(0.3, 'rgba(0,0,2,.2)'); fade.addColorStop(0.7, 'rgba(0,0,2,0)'); fade.addColorStop(1, 'rgba(20,10,10,.35)');
+    ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
   }
-
   var last = 0;
-  function loop(ts) {
-    if (ts - last > 33) { t = ts / 4200; draw(); last = ts; }
-    requestAnimationFrame(loop);
-  }
-  size();
-  window.addEventListener('resize', function () { size(); draw(); });
+  function loop(ts) { if (ts - last > 33) { t = ts / 4200; draw(); last = ts; } requestAnimationFrame(loop); }
+  size(); addEventListener('resize', function () { size(); draw(); });
   if (still) draw(); else requestAnimationFrame(loop);
 
-  /* Scroll: progress bar, fabric phase, product counter. */
-  var bar = document.getElementById('bar');
-  var count = document.getElementById('count');
-  function onScroll() {
-    var max = document.documentElement.scrollHeight - innerHeight;
-    var p = max > 0 ? scrollY / max : 0;
-    bar.style.width = (p * 100).toFixed(1) + '%';
-    scrollPhase = scrollY / 900;
-    if (still) draw();
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  var products = Array.prototype.slice.call(document.querySelectorAll('.product'));
+  var bar = document.getElementById('bar'), count = document.getElementById('count'), N = '18';
+  function onScroll() { var max = document.documentElement.scrollHeight - innerHeight; bar.style.width = (max > 0 ? scrollY / max * 100 : 0).toFixed(1) + '%'; scrollPhase = scrollY / 900; if (still) draw(); }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var products = [].slice.call(document.querySelectorAll('.product'));
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) count.textContent = e.target.dataset.n + ' / 16'; });
-    }, { rootMargin: '-45% 0px -45% 0px' });
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) count.textContent = e.target.dataset.n + ' / ' + N; }); }, { rootMargin: '-45% 0px -45% 0px' });
     products.forEach(function (p) { io.observe(p); });
-    var shelf = document.querySelector('.shelf-card');
-    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) count.textContent = '00 / 16'; }); }, { rootMargin: '-45% 0px -45% 0px' }).observe(shelf);
   }
+
+  /* Category filter: shelf and spreads together. */
+  var chips = document.getElementById('chips'), shelfItems = [].slice.call(document.querySelectorAll('#shelf li'));
+  var shelfLabel = document.getElementById('shelfLabel'), shelfN = document.getElementById('shelfN');
+  chips.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b) return;
+    var c = b.dataset.c;
+    [].forEach.call(chips.children, function (x) { var on = x === b; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); });
+    var n = 0;
+    shelfItems.forEach(function (li) { var on = c === 'all' || li.dataset.cat === c; li.hidden = !on; if (on) n++; });
+    products.forEach(function (p) { p.hidden = !(c === 'all' || p.dataset.cat === c); });
+    shelfLabel.textContent = c === 'all' ? 'Wszystkie produkty' : b.firstChild.textContent.trim(); shelfN.textContent = n;
+    document.querySelector('.shelf-card').scrollIntoView({ block: 'start' });
+  });
 })();
 </script>
 
