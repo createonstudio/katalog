@@ -76,6 +76,21 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline
 .stats { display: flex; flex-wrap: wrap; gap: 10px; }
 .stats span { border: 1px solid var(--edge); border-radius: 999px; padding: 7px 16px; font-size: 14px; color: var(--soft); background: rgba(0,0,0,.2); }
 .stats b { color: var(--ink); font-weight: 700; }
+/* Promo: whole-package price for 16–18 Nov. Hidden by script after the offer ends. */
+.promo { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 28px; align-items: center; padding: 22px 26px; border-radius: 22px;
+  background: linear-gradient(120deg, rgba(232,165,92,.22), rgba(42,63,158,.28)); border: 1px solid rgba(232,165,92,.55); box-shadow: 0 20px 50px -24px rgba(232,165,92,.6); }
+.promo::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(232,165,92,.35), transparent 70%); pointer-events: none; }
+@media (max-width: 640px) { .promo { grid-template-columns: minmax(0, 1fr); padding: 18px; order: -1; } .hero { margin-top: 4vh; } .promo-title b { white-space: normal; } }
+.promo-text { display: grid; gap: 4px; min-width: 0; position: relative; z-index: 1; }
+.promo-when { justify-self: start; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; color: #17110A; background: var(--amber); border-radius: 999px; padding: 4px 12px; }
+.promo-title { margin: 6px 0 0; font-size: clamp(22px, 3vw, 30px); line-height: 1.15; letter-spacing: -.03em; font-weight: 500; }
+.promo-title b { font-weight: 800; color: var(--amber); white-space: nowrap; }
+.promo-sub { margin: 0; color: var(--soft); font-size: 15px; }
+.promo-price { position: relative; z-index: 1; text-align: right; display: grid; gap: 2px; }
+@media (max-width: 640px) { .promo-price { text-align: left; } }
+.promo-price strong { font-size: clamp(44px, 6vw, 64px); line-height: 1; letter-spacing: -.04em; font-weight: 800; color: var(--ink); }
+.promo-price strong small { font-size: .45em; font-weight: 700; letter-spacing: 0; margin-left: 4px; color: var(--amber); }
+.promo-price span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; }
 .cta { justify-self: start; display: inline-flex; gap: 10px; align-items: center; text-decoration: none; background: var(--amber); color: #17110A; font-weight: 700; padding: 14px 28px; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease; }
 .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(232,165,92,.35); }
 
@@ -171,8 +186,16 @@ footer .label a { color: var(--amber); text-decoration: none; }
   <header class="hero glass">
     <div class="label">Katalog 2026 · Szablony · Webbooki · AI</div>
     <h1>Mniej wymyślania. <em>Więcej tworzenia.</em></h1>
-    <p>18 gotowych produktów dla twórców, marek osobistych i małych firm. Montaż rolek z AI, automatyzacje DM, prompty, hooki, szablony Canva i tysiące rolek gotowych do publikacji. Wybierasz, otwierasz i działasz jeszcze dziś.</p>
-    <div class="stats"><span><b>18</b> produktów</span><span><b>9</b> interaktywnych webbooków</span><span><b>13 000+</b> rolek i szablonów</span><span><b>12 000+</b> promptów</span></div>
+    <p>20 gotowych produktów dla twórców, marek osobistych i małych firm. Montaż rolek z AI, automatyzacje DM, prompty, hooki, szablony Canva i tysiące rolek gotowych do publikacji. Wybierasz, otwierasz i działasz jeszcze dziś.</p>
+    <div class="stats"><span><b>20</b> produktów</span><span><b>9</b> interaktywnych webbooków</span><span><b>13 000+</b> rolek i szablonów</span><span><b>12 000+</b> promptów</span></div>
+    <div class="promo" id="promo" role="note" aria-label="Oferta specjalna">
+      <div class="promo-text">
+        <span class="promo-when">W sprzedaży · 16–18 listopada</span>
+        <p class="promo-title">Cały zestaw w ofercie: <b>20 produktów</b> w jednej cenie</p>
+        <p class="promo-sub">Niesamowita oferta na polskim rynku: wszystkie te narzędzia za jedyne 187 zł, tylko w dniach kampanii!</p>
+      </div>
+      <div class="promo-price"><strong>187<small>zł</small></strong><span>za cały zestaw</span></div>
+    </div>
     <a class="cta" href="#hity">Zobacz hity 2026 <span aria-hidden="true">→</span></a>
   </header>
 
@@ -527,6 +550,17 @@ footer .label a { color: var(--amber); text-decoration: none; }
     products.forEach(function (p) { io.observe(p); });
   }
 
+
+  /* Promo (Warsaw time): the box disappears after the offer ends. */
+  (function () {
+    var box = document.getElementById('promo');
+    var START = Date.parse('2026-11-16T00:00:00+01:00'), END = Date.parse('2026-11-18T23:59:59+01:00');
+    function tick() {
+      var now = Date.now();
+      if (now > END) { box.hidden = true; return; }
+    }
+    tick(); setInterval(tick, 30000);
+  })();
   /* Category filter: shelf and spreads together. */
   var chips = document.getElementById('chips'), shelfItems = [].slice.call(document.querySelectorAll('#shelf li'));
   var shelfLabel = document.getElementById('shelfLabel'), shelfN = document.getElementById('shelfN');
