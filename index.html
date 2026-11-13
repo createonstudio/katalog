@@ -7,7 +7,7 @@
 <title>Katalog CreateOn Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..800&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap">
 <style>
 /* Layout: the CreateOn night gallery, made into a sales catalog. The moving
    fabric stays fixed behind. A sticky glass bar carries the brand and the
@@ -26,10 +26,11 @@
   --glass-2: rgba(28, 30, 40, .55);
   --edge: rgba(255, 255, 255, .18);
   --edge-soft: rgba(255, 255, 255, .08);
-  --amber: #E8A55C;
+  --amber: #FB973C;
   --navy: #2A3F9E;
-  --acc: #E8A55C;
-  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --acc: #FB973C;
+  --sans: Arial, Helvetica, sans-serif;
+  --head: "Poppins", Arial, sans-serif;
   --script: "Fraunces", Georgia, serif;
 }
 * { box-sizing: border-box; }
@@ -43,7 +44,7 @@ body {
   font-family: var(--sans); font-size: 16px; line-height: 1.65;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 110px;
+  padding-block: 0 130px;
 }
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 8px; }
@@ -71,7 +72,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline
 /* Hero */
 .hero { padding: clamp(28px, 6vw, 64px); display: grid; gap: 20px; margin-top: 10vh; }
 .hero h1 { margin: 0; font-weight: 400; font-size: clamp(44px, 7vw, 92px); line-height: .96; letter-spacing: -.055em; text-wrap: balance; max-width: 14ch; }
-.hero h1 em { font-family: var(--script); font-style: italic; letter-spacing: -.02em; color: var(--amber); }
+.hero h1 em { font-style: normal; color: var(--amber); }
 .hero p { margin: 0; color: var(--soft); max-width: 58ch; font-size: 18px; }
 .stats { display: flex; flex-wrap: wrap; gap: 10px; }
 .stats span { border: 1px solid var(--edge); border-radius: 999px; padding: 7px 16px; font-size: 14px; color: var(--soft); background: rgba(0,0,0,.2); }
@@ -98,7 +99,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline
 .hits-card { padding: clamp(20px, 4vw, 32px); display: grid; gap: 18px; margin-top: 14vh; }
 .hits-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .hits-head h2 { margin: 0; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -.045em; line-height: 1.05; }
-.hits-head h2 em { font-family: var(--script); color: var(--amber); }
+.hits-head h2 em { font-style: normal; color: var(--amber); }
 .hits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 @media (max-width: 900px) { .hits { grid-template-columns: minmax(0, 1fr); } }
 .hit { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: center; text-decoration: none; padding: 14px; border-radius: 20px; background: var(--glass-2); border: 1px solid var(--edge-soft); transition: border-color .2s ease, transform .2s ease; }
@@ -136,7 +137,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline
 .copy { min-width: 0; display: grid; gap: 16px; align-content: start; }
 .meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .copy h2 { font-weight: 400; font-size: clamp(32px, 4vw, 50px); line-height: 1.02; letter-spacing: -.045em; margin: 0; text-wrap: balance; }
-.copy .lead { margin: 0; font-family: var(--script); font-style: italic; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: var(--acc); max-width: 34ch; }
+.copy .lead { margin: 0; font-family: var(--head); font-weight: 300; font-size: clamp(20px, 2.3vw, 25px); line-height: 1.3; letter-spacing: -.02em; color: var(--acc); max-width: 36ch; }
 .copy p { margin: 0; max-width: 64ch; color: var(--soft); }
 .copy h3 { margin: 10px 0 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
 .formats { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -163,8 +164,30 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline
 @media (max-width: 600px) { .count { display: none; } }
 footer { margin-top: 22vh; padding: 40px 28px; text-align: center; display: grid; gap: 12px; justify-items: center; }
 footer .big { font-size: clamp(32px, 5vw, 56px); letter-spacing: -.05em; line-height: 1.05; }
-footer .big em { font-family: var(--script); color: var(--amber); letter-spacing: -.02em; }
+footer .big em { font-style: normal; color: var(--amber); }
 footer .label a { color: var(--amber); text-decoration: none; }
+
+/* Sales-page look: Poppins headings with tight tracking, Arial body, orange pill buttons in capitals. */
+h1, h2, h3, .hit h3, .promo-title, .promo-price strong, footer .big, .wins b { font-family: var(--head); }
+.hero h1, .copy h2, .hits-head h2, footer .big { font-weight: 400; letter-spacing: -.055em; }
+.copy h2 { letter-spacing: -.045em; }
+.cta, .bb-btn { text-transform: uppercase; letter-spacing: 1.4px; font: 700 14px var(--sans); border-radius: 30px; }
+.cta { background: var(--amber); color: #141414; padding: 16px 30px; }
+.cta:hover { box-shadow: 0 14px 34px rgba(251,151,60,.4); }
+.label, .avail, .shelf-head { letter-spacing: .24em; }
+.chip.active { background: var(--amber); border-color: var(--amber); color: #141414; }
+
+/* Sticky offer bar, as on the sales page */
+.buybar { position: fixed; z-index: 5; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px;
+  padding: 12px max(20px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
+  background: rgba(14, 18, 40, .9); border-top: 1px solid var(--edge); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.buybar .bb-l { display: grid; gap: 2px; min-width: 0; }
+.buybar .bb-l span { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.buybar .bb-l b { font-family: var(--head); font-size: 20px; font-weight: 600; }
+.buybar .bb-n { font-size: 10px; letter-spacing: .2em; color: var(--faint); font-variant-numeric: tabular-nums; }
+.buybar .bb-btn { justify-self: end; background: var(--amber); color: #141414; text-decoration: none; padding: 12px 22px; white-space: nowrap; }
+.buybar .bb-bar { position: absolute; left: 0; top: -1px; height: 2px; width: 0; background: linear-gradient(90deg, var(--navy), var(--amber)); }
+@media (max-width: 560px) { .promo-when { letter-spacing: .1em; } .buybar .bb-l span { letter-spacing: .12em; } .buybar .bb-n { display: none; } .buybar { grid-template-columns: minmax(0, 1fr) auto; } .buybar .bb-btn { padding: 11px 16px; font-size: 12px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .shelf img, .hit, .cta { transition: none; } .shelf a:hover img, .hit:hover, .cta:hover { transform: none; } }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
@@ -174,8 +197,11 @@ footer .label a { color: var(--amber); text-decoration: none; }
 
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="veil"></div>
-<div class="mark count" id="count">00 / 20</div>
-<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+<div class="buybar" id="buybar"><i class="bb-bar" id="bar" aria-hidden="true"></i>
+  <div class="bb-l"><span>Cały zestaw CreateOn Studio</span><b>187 zł</b></div>
+  <span class="bb-n" id="count">00 / 20</span>
+  <a class="bb-btn" href="https://createonstudio.com/sekret/" target="_blank" rel="noopener">Zobacz ofertę ↗</a>
+</div>
 
 <div class="wrap" id="top">
   <nav class="bar" aria-label="Kategorie">
@@ -196,17 +222,17 @@ footer .label a { color: var(--amber); text-decoration: none; }
       </div>
       <div class="promo-price"><strong>187<small>zł</small></strong><span>za cały zestaw</span></div>
     </div>
-    <a class="cta" href="#hity">Zobacz hity 2026 <span aria-hidden="true">→</span></a>
+    <a class="cta" href="#hity">Zobacz hity 2026 <span aria-hidden="true">↗</span></a>
   </header>
 
   <section class="hits-card glass" id="hity" aria-label="Hity 2026">
     <div class="hits-head"><h2>Hity <em>2026</em></h2><span class="label">AI · wideo · automatyzacje</span></div>
-    <div class="hits"><a class="hit" href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="Okładka: Montuj rolki z Claude" loading="lazy"><div><span class="hot">Hit 2026</span><h3>Montuj rolki z Claude</h3><p>Wgrywasz surowe nagranie. Claude oddaje gotową rolkę.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#tworz-claude" style="--acc:#F2683C"><img src="c/tworz-claude.jpg" alt="Okładka: Twórz zdjęcia i wideo z Claude" loading="lazy"><div><span class="hot">Nowość</span><h3>Twórz zdjęcia i wideo z Claude</h3><p>Twoje własne studio AI: zdjęcia, wideo i lektor w jednym oknie.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#agent" style="--acc:#2FB36A"><img src="c/agent.jpg" alt="Okładka: AI Marketing Agent" loading="lazy"><div><span class="hot">Nowość · Agent AI</span><h3>AI Marketing Agent</h3><p>Marketingowiec AI, który zna Twoją markę. I mówi po polsku.</p><b>Zobacz produkt →</b></div></a></div>
+    <div class="hits"><a class="hit" href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="Okładka: Montuj rolki z Claude" loading="lazy"><div><span class="hot">Hit 2026</span><h3>Montuj rolki z Claude</h3><p>Wgrywasz surowe nagranie. Claude oddaje gotową rolkę.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#efekty" style="--acc:#2F8CF0"><img src="c/efekty.jpg" alt="Okładka: 70 efektów i stylów montażu rolek" loading="lazy"><div><span class="hot">Nowość</span><h3>70 efektów i stylów montażu rolek</h3><p>Wybierasz efekty. Claude montuje. Rolka wygląda jak od topowego twórcy.</p><b>Zobacz produkt →</b></div></a><a class="hit" href="#agent" style="--acc:#2FB36A"><img src="c/agent.jpg" alt="Okładka: AI Marketing Agent" loading="lazy"><div><span class="hot">Nowość · Agent AI</span><h3>AI Marketing Agent</h3><p>Marketingowiec AI, który zna Twoją markę. I mówi po polsku.</p><b>Zobacz produkt →</b></div></a></div>
   </section>
 
   <section class="shelf-card glass" aria-label="Wszystkie produkty">
     <div class="shelf-head label"><span id="shelfLabel">Wszystkie produkty</span><span id="shelfN">20</span></div>
-    <ol class="shelf" id="shelf"><li data-cat="ai"><a href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><em>Hit 2026</em><span>Montuj rolki z Claude</span></a></li><li data-cat="ai"><a href="#tworz-claude" style="--acc:#F2683C"><img src="c/tworz-claude.jpg" alt="" loading="lazy"><em>Nowość</em><span>Twórz zdjęcia i wideo z Claude</span></a></li><li data-cat="ai"><a href="#agent" style="--acc:#2FB36A"><img src="c/agent.jpg" alt="" loading="lazy"><em>Nowość · Agent AI</em><span>AI Marketing Agent</span></a></li><li data-cat="ai"><a href="#manychat" style="--acc:#EC3E86"><img src="c/manychat.jpg" alt="" loading="lazy"><em>Sprzedaż w DM</em><span>26 szablonów automatyzacji ManyChat</span></a></li><li data-cat="ai"><a href="#shortcody" style="--acc:#3D6BF0"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>250+ shortcodów do ChatGPT</span></a></li><li data-cat="ai"><a href="#prompty550" style="--acc:#F59A4F"><img src="c/prompty550.jpg" alt="" loading="lazy"><span>550 promptów ChatGPT dla twórców cyfrowych</span></a></li><li data-cat="ai"><a href="#prompty" style="--acc:#5B86FF"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów ChatGPT dla biznesu</span></a></li><li data-cat="tresci"><a href="#bole" style="--acc:#F0436E"><img src="c/bole.jpg" alt="" loading="lazy"><em>Nowość</em><span>200+ bólów klienta (Pain Points)</span></a></li><li data-cat="tresci"><a href="#hooki" style="--acc:#E8307F"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ najlepszych hooków na Instagram i TikTok</span></a></li><li data-cat="tresci"><a href="#cta" style="--acc:#1FA67A"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 wezwań do działania (CTA), które sprzedają</span></a></li><li data-cat="ai"><a href="#pomysly" style="--acc:#2FA08A"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt cyfrowy</span></a></li><li data-cat="wideo"><a href="#bez-twarzy" style="--acc:#C9783F"><img src="c/bez-twarzy.jpg" alt="" loading="lazy"><span>10 000+ estetycznych rolek bez pokazywania twarzy</span></a></li><li data-cat="canva"><a href="#mockupy" style="--acc:#E8467C"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów mockupów do promocji i sprzedaży</span></a></li><li data-cat="plan"><a href="#planer" style="--acc:#C83FD6"><img src="c/planer.jpg" alt="" loading="lazy"><span>Planer contentu do social mediów</span></a></li><li data-cat="plan"><a href="#newslettery" style="--acc:#E07A3F"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</span></a></li><li data-cat="wideo"><a href="#podroze" style="--acc:#1E9FD6"><img src="c/podroze.jpg" alt="" loading="lazy"><span>900+ estetycznych rolek podróżniczych</span></a></li><li data-cat="wideo"><a href="#wellness" style="--acc:#B88A4A"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek: zdrowy styl życia, afirmacje i równowaga</span></a></li><li data-cat="wideo"><a href="#macierzynstwo" style="--acc:#C266C9"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>920+ rolek o macierzyństwie</span></a></li><li data-cat="canva"><a href="#identyfikacja" style="--acc:#2B8F5A"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>40 szablonów identyfikacji wizualnej marki</span></a></li><li data-cat="canva"><a href="#naklejki" style="--acc:#D98A8A"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ estetycznych naklejek na relacje i karuzele</span></a></li></ol>
+    <ol class="shelf" id="shelf"><li data-cat="ai"><a href="#rolki-claude" style="--acc:#F08A3C"><img src="c/rolki-claude.jpg" alt="" loading="lazy"><em>Hit 2026</em><span>Montuj rolki z Claude</span></a></li><li data-cat="ai"><a href="#efekty" style="--acc:#2F8CF0"><img src="c/efekty.jpg" alt="" loading="lazy"><em>Nowość</em><span>70 efektów i stylów montażu rolek</span></a></li><li data-cat="ai"><a href="#agent" style="--acc:#2FB36A"><img src="c/agent.jpg" alt="" loading="lazy"><em>Nowość · Agent AI</em><span>AI Marketing Agent</span></a></li><li data-cat="ai"><a href="#manychat" style="--acc:#EC3E86"><img src="c/manychat.jpg" alt="" loading="lazy"><em>Sprzedaż w DM</em><span>26 szablonów automatyzacji ManyChat</span></a></li><li data-cat="ai"><a href="#shortcody" style="--acc:#3D6BF0"><img src="c/shortcody.jpg" alt="" loading="lazy"><span>250+ shortcodów do ChatGPT</span></a></li><li data-cat="ai"><a href="#prompty550" style="--acc:#F59A4F"><img src="c/prompty550.jpg" alt="" loading="lazy"><span>550 promptów ChatGPT dla twórców cyfrowych</span></a></li><li data-cat="ai"><a href="#prompty" style="--acc:#5B86FF"><img src="c/prompty.jpg" alt="" loading="lazy"><span>10 000+ promptów ChatGPT dla biznesu</span></a></li><li data-cat="tresci"><a href="#bole" style="--acc:#F0436E"><img src="c/bole.jpg" alt="" loading="lazy"><em>Nowość</em><span>200+ bólów klienta (Pain Points)</span></a></li><li data-cat="tresci"><a href="#hooki" style="--acc:#E8307F"><img src="c/hooki.jpg" alt="" loading="lazy"><span>450+ najlepszych hooków na Instagram i TikTok</span></a></li><li data-cat="tresci"><a href="#cta" style="--acc:#1FA67A"><img src="c/cta.jpg" alt="" loading="lazy"><span>101 wezwań do działania (CTA), które sprzedają</span></a></li><li data-cat="ai"><a href="#pomysly" style="--acc:#2FA08A"><img src="c/pomysly.jpg" alt="" loading="lazy"><span>500 pomysłów na produkt cyfrowy</span></a></li><li data-cat="wideo"><a href="#bez-twarzy" style="--acc:#C9783F"><img src="c/bez-twarzy.jpg" alt="" loading="lazy"><span>10 000+ estetycznych rolek bez pokazywania twarzy</span></a></li><li data-cat="canva"><a href="#mockupy" style="--acc:#E8467C"><img src="c/mockupy.jpg" alt="" loading="lazy"><span>1000 szablonów mockupów do promocji i sprzedaży</span></a></li><li data-cat="plan"><a href="#planer" style="--acc:#C83FD6"><img src="c/planer.jpg" alt="" loading="lazy"><span>Planer contentu do social mediów</span></a></li><li data-cat="plan"><a href="#newslettery" style="--acc:#E07A3F"><img src="c/newslettery.jpg" alt="" loading="lazy"><span>30 gotowych newsletterów: powitanie, edukacja, sprzedaż</span></a></li><li data-cat="wideo"><a href="#podroze" style="--acc:#1E9FD6"><img src="c/podroze.jpg" alt="" loading="lazy"><span>900+ estetycznych rolek podróżniczych</span></a></li><li data-cat="wideo"><a href="#wellness" style="--acc:#B88A4A"><img src="c/wellness.jpg" alt="" loading="lazy"><span>850+ rolek: zdrowy styl życia, afirmacje i równowaga</span></a></li><li data-cat="wideo"><a href="#macierzynstwo" style="--acc:#C266C9"><img src="c/macierzynstwo.jpg" alt="" loading="lazy"><span>920+ rolek o macierzyństwie</span></a></li><li data-cat="canva"><a href="#identyfikacja" style="--acc:#2B8F5A"><img src="c/identyfikacja.jpg" alt="" loading="lazy"><span>40 szablonów identyfikacji wizualnej marki</span></a></li><li data-cat="canva"><a href="#naklejki" style="--acc:#D98A8A"><img src="c/naklejki.jpg" alt="" loading="lazy"><span>500+ estetycznych naklejek na relacje i karuzele</span></a></li></ol>
   </section>
 
   <article class="product" id="rolki-claude" data-n="01" data-cat="ai" style="--acc:#F08A3C">
@@ -225,20 +251,20 @@ footer .label a { color: var(--amber); text-decoration: none; }
       <div class="why"><b>Dlaczego teraz?</b> Montaż z AI to jedna z najszybciej rosnących umiejętności 2026. Kto zacznie teraz, publikuje częściej niż konkurencja.</div>
     </div>
   </article>
-  <article class="product" id="tworz-claude" data-n="02" data-cat="ai" style="--acc:#F2683C">
-    <div class="cover"><img src="c/tworz-claude.jpg" alt="Okładka: Twórz zdjęcia i wideo z Claude" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
+  <article class="product" id="efekty" data-n="02" data-cat="ai" style="--acc:#2F8CF0">
+    <div class="cover"><img src="c/efekty.jpg" alt="Okładka: 70 efektów i stylów montażu rolek" loading="lazy"><div class="avail">Dostępne w <b>CreateOn Studio</b></div></div>
     <div class="copy">
       <div class="meta"><span class="label">02 / 20 · AI i automatyzacje</span><span class="hot">Nowość</span></div>
-      <h2>Twórz zdjęcia i wideo z Claude</h2>
-      <p class="lead">Twoje własne studio AI: zdjęcia, wideo i lektor w jednym oknie.</p>
-      <p>Piszesz jedno zdanie, a Claude tworzy zdjęcie produktu, film promocyjny albo profesjonalny głos lektora. Łączysz Claude z ponad 130 modelami AI, takimi jak Flux, Recraft, Kling, Veo czy ElevenLabs, i montujesz gotowe rolki w Remotion. Bez subskrypcji do każdej aplikacji osobno.</p>
-      <div class="formats"><span>Webbook</span><span>Claude</span><span>130+ modeli AI</span></div>
+      <h2>70 efektów i stylów montażu rolek</h2>
+      <p class="lead">Wybierasz efekty. Claude montuje. Rolka wygląda jak od topowego twórcy.</p>
+      <p>Rolki, które zatrzymują scroll i wyglądają jak profesjonalnie zmontowane. Wybierasz efekty z katalogu, łączysz je w jeden prompt, a Claude Code montuje Twoje nagranie. Bez ręcznego dodawania każdego efektu i bez godzin na edycji, na TikToka, Instagram Reels i YouTube Shorts.</p>
+      <div class="formats"><span>Webbook</span><span>Claude Code</span><span>TikTok · Reels · Shorts</span></div>
       <h3>Co dostajesz</h3>
-      <ul class="get"><li>Konfiguracja krok po kroku: Claude, Picsart CLI i Remotion</li><li>Przegląd modeli AI: do czego służy każdy i ile orientacyjnie kosztuje</li><li>Gotowe prompty do zdjęć produktowych, grafik i krajobrazów</li><li>Prompty do wideo: produkt 360°, kinowy B-roll, ujęcia natury</li><li>Montaż w Remotion: animowane intro, napisy, eksport do MP4</li><li>Generowanie głosu lektora do rolek i reklam</li></ul>
+      <ul class="get"><li>70 gotowych stylów montażu: efektowne otwarcia, dynamiczne napisy, animacje, widżety i efekty specjalne</li><li>Efekty zatrzymujące scroll: napisy 3D za głową, symulacje czatu, elementy interfejsu iPhone&#x27;a i efekty WOW</li><li>Gotowe prompty techniczne: wybierasz style i łączysz je w jeden prompt dla Claude Code</li><li>Katalog w 10 kategoriach z wyszukiwarką, ulubionymi i własnymi zestawami montażowymi</li><li>Skill do Claude Code: pliki SKILL.md i styles.md, dzięki którym Claude zna wszystkie 70 stylów i wie, jak je wykonać</li></ul>
       <h3>Co zyskujesz</h3>
-      <div class="wins"><div><b>Sesja zdjęciowa bez fotografa</b><span>Zdjęcia produktów i filmy na zawołanie.</span></div><div><b>Płacisz tylko za efekt</b><span>Kredyty zamiast kilku miesięcznych abonamentów.</span></div><div><b>Mówisz po polsku</b><span>Opisujesz efekt, Claude dobiera model i parametry.</span></div></div>
-      <p class="who"><b>Dla kogo?</b> Dla twórców, sklepów online i marketerów, którzy chcą tworzyć materiały premium szybciej i taniej. Idealny duet z „Montuj rolki z Claude”.</p>
-      <div class="why"><b>Dlaczego teraz?</b> Klienci w 2026 oczekują wideo i zdjęć jakości reklamowej. Ten przewodnik daje je bez budżetu agencji.</div>
+      <div class="wins"><div><b>Efekt viralowej rolki</b><span>Montaż jak u największych twórców.</span></div><div><b>Godziny edycji mniej</b><span>Jeden prompt zamiast ręcznego klejenia efektów.</span></div><div><b>Twój własny styl</b><span>Zapisujesz zestawy i używasz ich w kolejnych rolkach.</span></div></div>
+      <p class="who"><b>Dla kogo?</b> Dla twórców, marek osobistych i social media managerów, którzy publikują rolki regularnie. Idealny duet z „Montuj rolki z Claude”: tam uczysz się montażu, tu dostajesz 70 gotowych efektów.</p>
+      <div class="why"><b>Dlaczego teraz?</b> Dynamiczny montaż to dziś standard viralowych rolek. Ten zestaw daje go bez godzin w edytorze i bez drogiego montażysty.</div>
     </div>
   </article>
   <article class="product" id="agent" data-n="03" data-cat="ai" style="--acc:#2FB36A">
@@ -589,7 +615,7 @@ footer .label a { color: var(--amber); text-decoration: none; }
     var START = Date.parse('2026-11-16T00:00:00+01:00'), END = Date.parse('2026-11-18T23:59:59+01:00');
     function tick() {
       var now = Date.now();
-      if (now > END) { box.hidden = true; return; }
+      if (now > END) { box.hidden = true; var bb = document.getElementById('buybar'); if (bb) bb.hidden = true; return; }
     }
     tick(); setInterval(tick, 30000);
   })();
